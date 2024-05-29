@@ -1,0 +1,27 @@
+[
+    {
+      "id":1,
+      "network": "MTN",
+      "categoryText":"MTN-AIRTIME",
+      "plans": ["MTN VTU"]
+    },
+    {
+      "id":2,
+      "network": "GLO",
+      "categoryText":"GLO-AIRTIME",
+      "plans": ["GLO VTU"]
+    },
+    {
+      "id":3,
+      "network": "AIRTEL",
+      "categoryText":"AIRTEL-AIRTIME",
+      "plans": ["AIRTEL VTU","AIRTEL share and sell"]
+    },
+    {
+      "id":4,
+      "network": "9MOBILE",
+      "categoryText":"9MOBILE-AIRTIME",
+      "plans": ["MOBILE VTU"]
+    }
+  ]
+  

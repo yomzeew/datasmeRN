@@ -1,0 +1,27 @@
+[
+    {
+      "id":1,
+      "network": "MTN",
+      "categoryText":"MTN-DATA",
+      "plans": ["MTN SME", "MTN GIFTING"]
+    },
+    {
+      "id":2,
+      "network": "GLO",
+      "categoryText":"GLO-DATA",
+      "plans": ["GLO SME"]
+    },
+    {
+      "id":3,
+      "network": "AIRTEL",
+      "categoryText":"AIRTEL-DATA",
+      "plans": ["AIRTEL COOPERATE GIFTING"]
+    },
+    {
+      "id":4,
+      "network": "9MOBILE",
+      "categoryText":"9MOBILE-DATA",
+      "plans": ["9MOBILE-SME"]
+    }
+  ]
+  

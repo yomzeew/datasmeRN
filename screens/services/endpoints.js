@@ -1,0 +1,8 @@
+export const signup="https://app.datamaxs.com/category/authentication/registration/signup"
+export const loginurl="https://www.app.datamaxs.com/category/authentication/registration/login"
+export const producturl="https://app.datamaxs.com/category/product/"
+export const buydataurl="https://app.datamaxs.com/purchase/product/center/"
+export const bankpreview="https://app.datamaxs.com/category/preview/banks/auto"
+export const userdetails="https://app.datamaxs.com/category/preview/dashboard"
+export const transactions="https://app.datamaxs.com/query/transaction/tables/"
+export const manualfunding="https://app.datamaxs.com/category/preview/manual"

@@ -12,16 +12,28 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to do something",
+        "NSPhotoLibraryUsageDescription": "This app accesses the library to do something",
+        "NSFaceIDUsageDescription":"This app use FaceID for Authentication"
+     }
+ 
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yomzeew.Dataproject"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "94c9974d-c420-41f9-8708-a1faf209a253"
+      }
     }
   }
 }
