@@ -190,6 +190,13 @@ const LoginPage=({navigation})=>{
     const handleforgot=()=>{
         navigation.navigate('forgotpassword')
     }
+    const handleshowemail=async()=>{
+        await AsyncStorage.removeItem('passdata')
+        setObjectdata('')
+        setdetails('')
+        setemail('')
+
+    }
 
  
     return(
@@ -261,9 +268,16 @@ const LoginPage=({navigation})=>{
             <TouchableOpacity onPress={submitlogin} className="bg-blue-600 w-80 mt-3 items-center h-12 flex justify-center rounded-2xl">
                 <Text className={`text-cyan-300  ${fieldtextone} font-bold`}>{!preloader?<Preloadertwo/>:'Login'}</Text>
             </TouchableOpacity>
+            <View className="flex flex-row justify-between">
             <TouchableOpacity onPress={handleforgot} className="items-center mt-3">
-              <Text className={`text-blue-900`}>Forgot your Password or this is not you?</Text>
+              <Text className={`text-blue-900`}>Forgot your Password?</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={handleshowemail} className="items-center mt-3">
+              <Text className={`text-blue-900`}>Sign New User</Text>
+            </TouchableOpacity>
+
+            </View>
+            
             <View className="items-center">
             <TouchableOpacity onPress={handleregister} className="items-center mt-3 border-b-2 border-blue-500 w-32">
               <Text className="text-blue-900 text-2xl font-bold">Register</Text>

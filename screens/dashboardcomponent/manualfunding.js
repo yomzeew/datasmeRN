@@ -40,8 +40,8 @@ const ManualFund=()=>{
                   });
                   console.log('myok')
                   console.log(response.data)
+                  setuserdata(response.data.accounts.bank)
                  
-
             }
             catch(error){
 
@@ -101,6 +101,7 @@ const ManualFund=()=>{
                             <FontAwesome5 name="copy" size={24} color="#509DFF" />
                             </TouchableOpacity>
                             </View>
+                            
                     <View className="items-center">
                         <Text className={`${fieldtexttwo} font-bold`}>{item.bank}</Text>
                         <Text className={`${fieldtextthree} font-bold`}>{item.number}</Text>

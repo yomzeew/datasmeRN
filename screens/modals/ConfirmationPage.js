@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View,ScrollView } from "react-native"
 import { FontAwesome5,FontAwesome} from "@expo/vector-icons"
-import { fieldtextone, fieldtexttwo } from "../services/textsetting"
+import { fieldtextone, fieldtextthree, fieldtexttwo } from "../services/textsetting"
 import { useState,useEffect } from "react"
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import PinModal from "./PinModal";
@@ -42,6 +42,7 @@ const ConfirmationPage=({alldata,senddata,close,beneficairyarray,interfacePin,se
         else if(interfacePin==='cable'){
             settotalamount(senddata.amount)
             console.log(senddata.decoderNumber)
+
     
         }
         else if(interfacePin==='electricity'){
@@ -150,9 +151,9 @@ const handlewallet=()=>{
                 {(interfacePin==='cable'||interfacePin==='electricity'||interfacePin==='exam')?
                 <View>
                     <View className="items-center">
-                       {interfacePin==='electricity' && <Text className={`${fieldtexttwo} text-center font-bold`}>{`Are sure you want to \n Make Payment of`} &#8358;{totalamount} </Text>}
-                       {interfacePin==='exam' && <Text className={`${fieldtexttwo} text-center font-bold`}>You are making Payment for {senddataforexam.examname} <Text>check your email: {senddataforexam.email}</Text></Text>}
-                       {interfacePin==='cable' && <Text className={`${fieldtexttwo} text-center font-bold`}>Are sure you want to payment to this Decoder Number {senddata.decoderNumber} <Text>with amount of  &#8358;{senddata.amount}</Text></Text>}
+                       {interfacePin==='electricity' && <Text className={`${fieldtexttwo} text-center `}>{`Are sure you want to \n Make Payment of`} &#8358;{totalamount} </Text>}
+                       {interfacePin==='exam' && <Text className={`${fieldtexttwo} text-center `}>You are making Payment for {senddataforexam.examname} <Text>check your email: {senddataforexam.email}</Text></Text>}
+                       {interfacePin==='cable' && <View><Text className={`${fieldtexttwo} text-center `}>Are sure you want to payment to this Decoder Number {senddata.decoderNumber} <Text>with amount of  &#8358;{senddata.amount}</Text></Text><Text className={`${fieldtextthree} text-center`}>{senddata.decodername}</Text></View>}
                     </View>
 
                 </View>: 

@@ -3,10 +3,10 @@ import { fieldtextone, fieldtexttwo } from "../services/textsetting"
 import { useEffect, useState } from "react"
 import { AntDesign, Octicons, FontAwesome, FontAwesome5, Entypo } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native"
-import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing  } from 'react-native-reanimated';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
-import { userdetails } from "../services/endpoints"
+import { updatedetails, updatepass, updatepin, userdetails } from "../services/endpoints"
 import axios from "axios"
 import Preloadertwo from "../preloadertwo"
 import Header from "./header"
@@ -24,6 +24,19 @@ const Settingss = () => {
     const [showupdate, setshowupdate] = useState(false)
     const [Msg, setMsg] = useState('')
     const [EditView, setEditView] = useState(false)
+    const [viewDone,setViewDone]=useState(false)
+    const [loaderupdate,setloaderupdate]=useState(false)
+    const [Editplatform,setEditplatform]=useState('')
+    const [currentvalue,setcurrentvalue]=useState('')
+    const [errormessage,seterrormessage]=useState('')
+    const [oldpassword,setoldpassword]=useState('')
+    const [password,setpassword]=useState('')
+    const [showold,setshowold]=useState(false)
+    const [shownew,setshownew]=useState(false)
+    const [showoldpin,setshowoldpin]=useState(false)
+    const [shownewpin,setshownewpin]=useState(false)
+    const [pin,setpin]=useState('')
+    const [oldpin,setoldpin]=useState('')
 
 
 
@@ -131,17 +144,162 @@ const Settingss = () => {
     const cancelHandle = () => {
         setEnrollView(false)
     }
-    const handleupdatenumber = () => {
+    const handleupdate = (value) => {
+        setEditplatform(value)
         setEditView(true)
     }
     const handleclose=()=>{
         setEditView(false)
 
     }
-    const HandleUpdate=()=>{
+   
+    const bounceValue = useSharedValue(0);
 
-    }
+    const animatedStyles = useAnimatedStyle(() => {
+      return {
+        transform: [
+          {
+            translateY: bounceValue.value,
+          },
+        ],
+      };
+    });
+    const handleBounce = () => {
+        bounceValue.value = withSpring(-10, {
+          damping: 2,
+          stiffness: 200,
+          mass: 1,
+        }, () => {
+          bounceValue.value = withSpring(0, {
+            damping: 2,
+            stiffness: 200,
+            mass: 1,
+          });
+        });
+      };
+    
+  
+      
+    const HandleUpdate=async()=>{
+        if(Editplatform==='phoneno'){
+            const data={
+                number:phoneno,
+                username:username,
+                email:email,
+                fullname:fullname,
+                }
+                const mytoken = await AsyncStorage.getItem('mytoken')
+                const mytokenreal = JSON.parse(mytoken)
+                try{
+                    setloaderupdate(true)
+                    const response=await axios.post(updatedetails,data,{
+                        headers:{
+                            Authorization:`Bearer ${mytokenreal}`
+                        }
+                    })
+                    if(response.data.status===200){
+                        setViewDone(true)
+                        setEditView(false)
+                        handleBounce()
+                    }
+                
+                }catch(error){
+                console.error(error)
+                }
+                finally{
+                    setloaderupdate(false)
+                
+                }
+                    }
 
+                 
+        else if (Editplatform==='password'){
+            const data={
+                number:phoneno,
+                username:username,
+                email:email,
+                fullname:fullname,
+                }
+                const mytoken = await AsyncStorage.getItem('mytoken')
+                const mytokenreal = JSON.parse(mytoken)
+                try{
+                    setloaderupdate(true)
+                    const response=await axios.post(updatepass,data,{
+                        headers:{
+                            Authorization:`Bearer ${mytokenreal}`
+                        }
+                    })
+                    console.log(response.data)
+                    if(response.data.status===200){
+                       const myObject= getObjectdata()
+                       myObject.password=password
+                       console.log(myObject)
+                        await AsyncStorage.setItem('passdata',JSON.stringify(myObject))
+                        setViewDone(true)
+                        setEditView(false)
+                        handleBounce()
+                    }
+                
+                }catch(error){
+                console.error(error)
+                const errormsg=error.response.data
+            const errmsg=errormsg.errors[0].msg
+            seterrormessage(errmsg.toString())
+            console.log(errormsg.errors[0].msg)
+                }
+                finally{
+                    setloaderupdate(false)
+                
+                }
+            
+
+        }  
+        else if (Editplatform==='pin'){
+            const data={
+                number:phoneno,
+                username:username,
+                email:email,
+                fullname:fullname,
+                }
+                const mytoken = await AsyncStorage.getItem('mytoken')
+                const mytokenreal = JSON.parse(mytoken)
+                try{
+                    setloaderupdate(true)
+                    const response=await axios.post(updatepin,data,{
+                        headers:{
+                            Authorization:`Bearer ${mytokenreal}`
+                        }
+                    })
+                    console.log(response.data)
+                    if(response.data.status===200){
+                      
+                        setViewDone(true)
+                        setEditView(false)
+                        handleBounce()
+                    }
+                
+                }catch(error){
+                console.error(error)
+                const errormsg=error.response.data
+            const errmsg=errormsg.errors[0].msg
+            seterrormessage(errmsg.toString())
+            console.log(errormsg.errors[0].msg)
+                }
+                finally{
+                    setloaderupdate(false)
+                
+                }
+            
+
+        }  
+    } 
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+          setViewDone(false)
+        }, 3000);
+        return () => clearTimeout(timeoutId);
+      }, [viewDone])
     return (
         <View className="h-full">
             {EnrollView && <View className="h-full w-full absolute flex justify-center items-center z-50 ">
@@ -151,24 +309,95 @@ const Settingss = () => {
                     <TouchableOpacity onPress={cancelHandle}><Text className="text-white font-bold py-3 text-center">OK</Text></TouchableOpacity>
                 </View>
             </View>}
+           
             {EditView && <View className="h-full w-full absolute flex justify-center items-center z-50 ">
                 <View className="bg-slate-400 h-full w-full absolute opacity-70 flex justify-center items-center" />
                 <View className="px-3 w-full">
                     <View className="w-full  flex justify-center px-10 py-5">
-                        <View className="bg-slate-50 px-3 py-3  rounded-xl">
+                       
+                         <View className="bg-slate-50 px-3 py-3  rounded-xl">
                         <View className="items-end mb-3">
                             <TouchableOpacity onPress={handleclose}>
                                 <FontAwesome5 name="times-circle" color="navy" size={24} />
                             </TouchableOpacity>
                         </View>
-
+                       {Editplatform==='phoneno' && <View>
+                            <Text>Phone Number</Text>
                         <TextInput
                             className="border-slate-400 h-12 text-lg border rounded-lg px-3"
                             keyboardType="numeric"
                             value={phoneno}
-                            onChangeText={(text) => setphoneno(text)}
+                            onChangeText={(text)=>setphoneno(text)}
                         />
-                        <TouchableOpacity onPress={HandleUpdate} className="h-12 bg-blue-600 mt-3 rounded-xl"><Text className="text-white font-bold py-3 text-center">Update</Text></TouchableOpacity>
+
+                        </View>}
+                        {Editplatform==='password' && <View>
+                            <View className="items-center"><Text className="font-bold text-red-500">{errormessage}</Text></View>
+                            <Text className="mt-3">Old Psssword</Text>
+                            <View className="w-full">
+                                <View className="absolute right-0 h-12 z-50  justify-center flex px-3">
+                                <TouchableOpacity onPress={()=>setshowold(!showold)}>{showold?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                    </View>
+                            
+                        <TextInput
+                            className="border-slate-400 h-12 text-lg border rounded-lg px-3"
+                            onChangeText={(text)=>setoldpassword(text)}
+                            secureTextEntry={showold}
+                        />
+                             </View>
+                           
+                        <View className="mt-3">
+                        <Text>New Password</Text>
+                        <View className="w-full">
+                                <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
+                                <TouchableOpacity onPress={()=>setshownew(!shownew)}>{shownew?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                    </View>
+                            
+                                    <TextInput
+                            className="border-slate-400 h-12 text-lg border rounded-lg px-3"
+                            onChangeText={(text)=>setpassword(text)}
+                            secureTextEntry={shownew}
+                        />
+                             </View>
+                        
+                            </View>
+                        
+
+                        </View>}
+                        {Editplatform==='pin' && <View>
+                            <View className="items-center"><Text className="font-bold text-red-500">{errormessage}</Text></View>
+                            <Text className="mt-3">Old Pin</Text>
+                            <View className="w-full">
+                                <View className="absolute right-0 h-12 z-50  justify-center flex px-3">
+                                <TouchableOpacity onPress={()=>setshowoldpin(!showoldpin)}>{showoldpin?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                    </View>
+                            
+                        <TextInput
+                            className="border-slate-400 h-12 text-lg border rounded-lg px-3"
+                            onChangeText={(text)=>setoldpin(text)}
+                            secureTextEntry={showold}
+                        />
+                             </View>
+                           
+                        <View className="mt-3">
+                        <Text>New Pin</Text>
+                        <View className="w-full">
+                                <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
+                                <TouchableOpacity onPress={()=>setshownewpin(!shownewpin)}>{shownewpin?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                    </View>
+                            
+                                    <TextInput
+                            className="border-slate-400 h-12 text-lg border rounded-lg px-3"
+                            onChangeText={(text)=>setpin(text)}
+                            secureTextEntry={shownew}
+                        />
+                             </View>
+                        
+                            </View>
+                        
+
+                        </View>}
+                        <TouchableOpacity onPress={HandleUpdate} className="h-12 bg-blue-600 mt-3 rounded-xl flex justify-center items-center">{loaderupdate?<Preloadertwo/>:<Text className="text-white font-bold py-3 text-center">Update</Text>}</TouchableOpacity>
 
                         </View>
                        
@@ -179,6 +408,27 @@ const Settingss = () => {
 
                 </View>
             </View>}
+            {viewDone &&
+            <View className="h-full w-full absolute flex justify-center items-center z-50 ">
+            <View className="bg-slate-400 h-full w-full absolute opacity-70 flex justify-center items-center" />
+            <View className="px-3 w-full">
+                <View className="w-full items-center flex justify-center px-10 py-5">
+                   
+                <View className="bg-slate-50 px-3 w-44 py-3 abosolute z-50 rounded-xl">
+                       
+                       <Animated.View style={[animatedStyles ]} className="h-16 flex justify-center items-center">
+                       <AntDesign name="checkcircle" size={30} color="#509DFF" />
+                        <Text className={`${fieldtexttwo} font-semibold`}>Done</Text>
+                        </Animated.View>
+                       </View>
+                   
+
+                </View>
+
+
+
+            </View>
+        </View>}
             {loader &&
                 <View className="bg-slate-400 h-full w-full absolute z-50 opacity-70 flex justify-center items-center">
                     <Preloadertwo />
@@ -243,7 +493,7 @@ const Settingss = () => {
 
                                 </View>
                                 <View className="flex flex-row">
-                                    <TouchableOpacity onPress={handleupdatenumber}>
+                                    <TouchableOpacity onPress={()=>handleupdate('phoneno')}>
                                         <Entypo name="edit" size={24} color="#509DFF" />
                                         <Text>Edit</Text>
                                     </TouchableOpacity>
@@ -271,6 +521,38 @@ const Settingss = () => {
                             <TouchableOpacity onPress={handleshowbvn}>
                                 <FontAwesome5 name="eye-slash" size={24} color="#509DFF" />
                             </TouchableOpacity>
+
+                        </View>
+                        <View className="px-3 items-center flex justify-between flex-row">
+                            <View>
+                                <Text className="mt-2">Change Password</Text>
+                                <Text className={`${fieldtextone}`}>******</Text>
+
+                            </View>
+                            <View className="flex flex-row">
+                                    <TouchableOpacity onPress={()=>handleupdate('password')}>
+                                        <Entypo name="edit" size={24} color="#509DFF" />
+                                        <Text>Edit</Text>
+                                    </TouchableOpacity>
+
+
+                                </View>
+
+                        </View>
+                        <View className="px-3 items-center flex justify-between flex-row">
+                            <View>
+                                <Text className="mt-2">Change Pin</Text>
+                                <Text className={`${fieldtextone}`}>******</Text>
+
+                            </View>
+                            <View className="flex flex-row">
+                                    <TouchableOpacity onPress={()=>handleupdate('pin')}>
+                                        <Entypo name="edit" size={24} color="#509DFF" />
+                                        <Text>Edit</Text>
+                                    </TouchableOpacity>
+
+
+                                </View>
 
                         </View>
 

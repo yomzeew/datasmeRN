@@ -18,6 +18,7 @@ import TransHistorytwo from './screens/dashboardcomponent/transhistorytwo';
 import Transactiondetails from './screens/dashboardcomponent/transactiondetails';
 import PinModal from './screens/modals/PinModal';
 import KeyboardCustom from './screens/services/keyboardcustom';
+import { PaperProvider } from 'react-native-paper';
 import Settingss from './screens/dashboardcomponent/settings';
 import CableTv from './screens/dashboardcomponent/cableTv';
 import ManualFund from './screens/dashboardcomponent/manualfunding';
@@ -25,6 +26,7 @@ import ForgostPassword from './screens/forgotpassword';
 export default function App() {
   const Stack = createStackNavigator();
   return (
+    <PaperProvider>
     <NavigationContainer>
     <Stack.Navigator 
     initialRouteName="start"
@@ -63,5 +65,6 @@ export default function App() {
      
     </Stack.Navigator>
   </NavigationContainer>
+  </PaperProvider>
   );
 }

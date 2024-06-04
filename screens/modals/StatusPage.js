@@ -21,7 +21,7 @@ const Statuspage=({message,close,messagestatus,datamessage})=>{
             
 
             </View>:
-            <View className="flex-1 justify-center ">
+            <View className="flex-1 justify-center px-5 ">
              <View className="items-center"><FontAwesome5 name="times-circle" color="red" size={100} /></View>
              <Text className={`${fieldtexttwo} font-bold text-center`}>Failed</Text>
             <Text className={`${fieldtextone} text-center`}>{message}</Text>

@@ -153,12 +153,12 @@ useEffect(()=>{
             {beneficiarys.length>0?Beneficiary.map((item,index)=>(
             <View key={index} className="mt-2">
                 <Text className={`${fieldtextone} font-bold`}>Select Plan for <Text className="text-red-500">{item.beneficiary}</Text> </Text>
-                <TouchableOpacity onPress={()=>handleselectPlan(index)} className="h-16 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
+                <TouchableOpacity onPress={()=>handleselectPlan(index)} className="h-12 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
                             <Text>{item.plan}</Text>
                             <TouchableOpacity><AntDesign name="down" size={24} color="black" /></TouchableOpacity>
 
                         </TouchableOpacity>
-                        <TouchableOpacity  className="h-16 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3 mt-3">
+                        <TouchableOpacity  className="h-12 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3 mt-3">
                             <Text>{item.amount}</Text>
                             <TouchableOpacity onPress={()=>handleeditamount(index)}><AntDesign name="edit" size={24} color="black" /></TouchableOpacity>
 

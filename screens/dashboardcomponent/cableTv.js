@@ -14,6 +14,9 @@ import { StatusBar } from "expo-status-bar";
 import Preloadertwo from "../preloadertwo"
 import Header from "./header"
 import ConfirmationPage from "../modals/ConfirmationPage"
+import { cabletvapi } from "../services/endpoints"
+import axios from "axios"
+import Preloader from "../preloader"
 const CableTv = () => {
     const navigation = useNavigation()
     const [hkey, sethkey] = useState('flex-1')
@@ -36,6 +39,8 @@ const CableTv = () => {
     const [datasend,setdatasend]=useState([])
     const [dataplanarray,setdataplanarray]=useState([])
     const [showConf,setshowConf]=useState(false)
+    const [decodername,setdecodername]=useState('')
+    const [showiucloader,setshowiucloader]=useState(false)
    
     const functiongetExp = async () => {
         const getTime = await AsyncStorage.getItem('mytimestamp')
@@ -55,6 +60,7 @@ const CableTv = () => {
                   // get the  decoder
                 setdecoderdata(mydataall.decoder)
                 setplandata(mydataall.plans)
+               
 
             }catch(error){
 
@@ -151,7 +157,7 @@ const CableTv = () => {
             seterrormessage('Select Plan')
             return
         }
-         if (!isNaN(decodernumber)) {
+         if (!isNaN( decodernumber.replace(/\s+/g, ""))) {
             console.log('ok')
           } else {
             seterrormessage('Decoder Number invalid')
@@ -163,8 +169,19 @@ const CableTv = () => {
             item.categoryId===decoderid 
         ))
         
-       
-        const datato={serviceID:getdata.PlanID,decoderNumber:decodernumber,decoder:decoderid,amount:amount}
+        const decodernumberspace = decodernumber.replace(/\s+/g, "");
+        const changeStructure = {
+            161:1000,
+            162:2000,
+            163:3000
+           }
+        const datato={
+             serviceID : changeStructure[decoderid],
+            decoderNumber :decodernumberspace,
+            decoder : decoderid,
+            decodername:decodername,
+            decoderNumber:decodernumber,
+            amount:amount}
         setdatasend(datato)
         handleConfshow()
        
@@ -181,7 +198,9 @@ const animatedStylespin = useAnimatedStyle(() => ({
 
     }
     const handledecodernumber=(text)=>{
+        setshowiucloader(true)
         setdecodernumber(text)
+        
 
 
     }
@@ -200,11 +219,59 @@ const handlecloseConf=(value)=>{
 
 
 }
+const checkname=async()=>{
+    const decodernumberspace = decodernumber.replace(/\s+/g, "");
+    const changeStructure = {
+        161:1000,
+        162:2000,
+        163:3000
+       }
+    const data= {
+        debit : "wallet",
+        request : {
+        serviceID : changeStructure[decoderid],
+        decoderNumber :decodernumberspace,
+        decoder : decoderid
+            }}
+console.log(data)
+try{
+    const mytoken = await AsyncStorage.getItem('mytoken')
+                const token= JSON.parse(mytoken)
+    const response = await axios.post(cabletvapi,data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+    setdecodername(response.data.succesfulOrder[0].response.name)
+    
+}
+catch(error){
+
+}finally{
+    setshowiucloader(false)
+
+}
+}
+
+    
+useEffect(()=>{
+    const getnamedecoder=()=>{
+        if(decodernumber.length<10){
+            return
+        }
+        else{
+            checkname()
+          
+        }
+
+    }
+    getnamedecoder()
+  
+
+},[decodernumber])
     
     return (
-        <View className="h-full bg-slate-50">
-             
-             
+        <View className="h-full bg-slate-50">   
             <StatusBar style="dark" />
             {loader &&
                 <View className="bg-slate-400 h-full w-full absolute z-50 opacity-70 flex justify-center items-center">
@@ -312,7 +379,7 @@ const handlecloseConf=(value)=>{
                    <View className="mt-5 px-3">
                        <View>
                            <Text className={`${fieldtextone} text-blue-600`}>Tv</Text>
-                           <TouchableOpacity onPress={handleshowtv} className="bg-slate-100 h-16 w-full border rounded-xl border-slate-400 items-center justify-between flex flex-row px-3">
+                           <TouchableOpacity onPress={handleshowtv} className="bg-slate-100 h-12 w-full border rounded-xl border-slate-400 items-center justify-between flex flex-row px-3">
                                <Text className={fieldtextone}>{decodertext?decodertext:'Select Tvs'}</Text>
                                
 
@@ -320,29 +387,40 @@ const handlecloseConf=(value)=>{
                        </View>
                        <View className="mt-3">
                            <Text className={`${fieldtextone} text-blue-600`}>Plan</Text>
-                           <TouchableOpacity onPress={isDisable?handleshowplan:null} className="bg-slate-100 h-16 w-full border rounded-xl border-slate-400 items-center justify-between flex flex-row px-3">
+                           <TouchableOpacity onPress={isDisable?handleshowplan:null} className="bg-slate-100 h-12 w-full border rounded-xl border-slate-400 items-center justify-between flex flex-row px-3">
                                <Text className={fieldtextone}>{plantext?plantext.toUpperCase():'Select Plan'}</Text>
 
                            </TouchableOpacity>
                            <View className="mt-3">
                                <Text className={`${fieldtextone} text-blue-600`}>Amount</Text>
-                               <View className="bg-slate-100 border border-slate-400 rounded-xl h-16 w-full flex justify-center px-2">
+                               <View className="bg-slate-100 border border-slate-400 rounded-xl h-12 w-full flex justify-center px-2">
                                    <Text className={fieldtextone}>{amount===''?'--':'N'+amount}</Text>
 
                                </View>
 
                            </View>
-                           <View className="mt-5">
-                               <Text className={`font-bold ${fieldtextone} text-slate-500`}>Decoder Number</Text>
+                           <View className="mt-3  w-full">
+                            <View className="h-16 bg-slate-100 w-full flex justify-center rounded-xl">
+                            <Text className={`${fieldtexttwo} font-semibold text-center text-slate-400`}>{decodername?decodername:'Decoder Name'}</Text>
+                            </View>
+                               <Text className={` ${fieldtextone} text-blue-600`}>Decoder Number</Text>
+                               <View>
+                               {showiucloader &&<View className="h-12 absolute right-2 z-50 justify-center items-center flex">
+                                <Preloader/>
+
+                               </View>}
                            <TextInput
-                               className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                               className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                onChangeText={(text) => { handledecodernumber(text) }}
                                
                                keyboardType="numeric"
                            />
+
+                               </View>
+                               
                                </View>
 
-                           <TouchableOpacity onPress={handlesubmit} className="w-full bg-blue-500 items-center h-10 rounded-xl mt-3 flex justify-center">
+                           <TouchableOpacity disabled={decodername===''?true:false} onPress={decodername?handlesubmit:null} className={`${decodername?'bg-blue-500':'bg-blue-300'} w-full  items-center h-10 rounded-xl mt-3 flex justify-center`}>
                                <Text className={`text-white ${fieldtextone}`}>CONTINUE</Text>
                            </TouchableOpacity>
 

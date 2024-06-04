@@ -229,7 +229,7 @@ const animatedStylespin = useAnimatedStyle(() => ({
                             <Text className={`${fieldtextone} text-center text-red-500`}>{errormessage}</Text>
                         <View className="mt-5">
                         <Text className={fieldtextone}>Select Exam</Text>
-                        <TouchableOpacity onPress={handleshowexam}  className="h-16 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
+                        <TouchableOpacity onPress={handleshowexam}  className="h-12 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
                             <Text className={fieldtextone}>{examname?examname:'---'}</Text>
                             
 
@@ -242,7 +242,7 @@ const animatedStylespin = useAnimatedStyle(() => ({
                                 <View>
                                 <Text className={`font-bold ${fieldtextone} text-slate-500`}>Quantity(only one quantity at a time)</Text>
                             <TextInput
-                                className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                                className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handlequantity(text) }}
                                 keyboardType="numeric"
                             />
@@ -251,7 +251,7 @@ const animatedStylespin = useAnimatedStyle(() => ({
                                 <View className="mt-5">
                                 <Text className={`font-bold ${fieldtextone} text-slate-500`}>Receiver Email</Text>
                             <TextInput
-                                className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                                className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handleemail(text) }}
                                 
                                 keyboardType="email-address"

@@ -277,7 +277,7 @@ const handlecloseConf=(value)=>{
                             <Text className={`${fieldtextone} text-center text-red-500`}>{errormessage}</Text>
                         <View className="mt-5">
                         <Text className={fieldtextone}>Select Disco</Text>
-                        <TouchableOpacity onPress={handleshowdisco}  className="h-16 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
+                        <TouchableOpacity onPress={handleshowdisco}  className="h-12 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
                             <Text className={fieldtextone}>{disconame?disconame.toUpperCase():'---'}</Text>
                            
 
@@ -286,7 +286,7 @@ const handlecloseConf=(value)=>{
                     </View>
                     <View className="mt-5">
                         <Text className={fieldtextone}>Select Disco Type</Text>
-                        <TouchableOpacity onPress={handleshowdiscotype}  className="h-16 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
+                        <TouchableOpacity onPress={handleshowdiscotype}  className="h-12 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
                             <Text className={fieldtextone}>{discotype?discotype:'---'}</Text>
                             
 
@@ -299,7 +299,7 @@ const handlecloseConf=(value)=>{
                                 <View>
                                 <Text className={`font-bold ${fieldtextone} text-slate-500`}>Enter Meter Number</Text>
                             <TextInput
-                                className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                                className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handlemeter(text) }}
                                 keyboardType="numeric"
                             />
@@ -308,7 +308,7 @@ const handlecloseConf=(value)=>{
                                 <View className="mt-5">
                                 <Text className={`font-bold ${fieldtextone} text-slate-500`}>Amount</Text>
                             <TextInput
-                                className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                                className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handleamount(text) }}
                                 keyboardType="numeric"
                             />
@@ -317,7 +317,7 @@ const handlecloseConf=(value)=>{
                                 <View className="mt-5">
                                 <Text className={`font-bold ${fieldtextone} text-slate-500`}>Receiver Email</Text>
                             <TextInput
-                                className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                                className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handleemail(text) }}
                                 
                                 keyboardType="email-address"

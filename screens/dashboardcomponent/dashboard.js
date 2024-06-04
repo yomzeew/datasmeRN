@@ -20,6 +20,7 @@ import Footer from "./footer";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
+import { Badge } from "react-native-paper";
 
 
 const Dashboard = () => {
@@ -54,6 +55,7 @@ const Dashboard = () => {
             const mytoken = await AsyncStorage.getItem('mytoken')
             const mytokenreal = JSON.parse(mytoken)
             settoken(mytokenreal)
+            console.log(mytokenreal)
         }
 
     }
@@ -67,23 +69,22 @@ const Dashboard = () => {
                     Authorization: `Bearer ${mytokenreal}`,
                 }
             });
-
-            const messages = await response.data.details.messages[0]
+            setusername(response.data.details.user[0].username)
+            setAccount(response.data.details.user[0].balance)
+            setbanksArray(JSON.parse(response.data.details.user[0].banks))
+            setBonus(response.data.details.user[0].bonus)
+            setbvnstatus(response.data.details.user[0].bvnVerification)
+            const messages=response.data.details.messages[0]
             setheadline(messages.messages[indexmsg].headline)
             setbody(messages.messages[indexmsg].message)
             settypeofmsg(messages.messages[indexmsg].messageType)
             setmessage(messages.messages)
-            const data = response.data.details
-            const getusername = data.user[0].username
-            const account = data.user[0].balance
-            const bonus = data.user[0].bonus
-            const accountstatus = data.bvnVerification
-            setbvnstatus(accountstatus)
-            setAccount(account)
-            setBonus(bonus)
-            setusername(getusername)
-            setbanksArray(JSON.parse(data.user[0].banks))
-            console.log(JSON.parse(data.user[0].banks))
+          
+           
+            
+           // setusername(getusername)
+            
+           
 
 
 
@@ -142,9 +143,13 @@ const Dashboard = () => {
 
     }
     const handleautofund = () => {
+        setshowfund(false)
+        translateY.value = withSpring(300)
         navigation.navigate('autofund')
     }
     const handlemanualfund=()=>{
+        setshowfund(false)
+        translateY.value = withSpring(300)
         navigation.navigate('manualfund')
     }
     const handlebalance = async () => {
@@ -158,7 +163,9 @@ const Dashboard = () => {
                     Authorization: `Bearer ${mytokenreal}`,
                 }
             });
+            
             const data = response.data.details
+
             const account = data.user[0].balance
             const bonus = data.user[0].bonus
             setAccount(account)
@@ -197,15 +204,19 @@ const Dashboard = () => {
         const lengthArray = message.length
         if (indexmsg < lengthArray - 1) {
             setindexmsg((prev) => prev + 1)
+            handleshowalert()
+
 
             console.log('ok')
         } else {
             setshowAlert(false)
+            handleclosealert()
 
         }
 
 
     }
+    
     useEffect(() => {
         if (message.length > 0) {
             setheadline(message[indexmsg].headline)
@@ -237,6 +248,20 @@ const Dashboard = () => {
         translateYrefer.value = withSpring(300)
 
     }
+    const translateYalert = useSharedValue(0);
+    const animatedStylesalert = useAnimatedStyle(() => ({
+        //transform: [{ translateY: translateYalert.value }],
+    }));
+    const handleshowalert = () => {
+        translateYalert.value = withSpring(0)
+       
+
+    }
+    const handleclosealert = () => {
+       
+        translateYalert.value = withSpring(300)
+
+    }
 
     const handleShare = async () => {
         console.log('ok')
@@ -263,6 +288,7 @@ const Dashboard = () => {
     const handlecable = () => {
         navigation.navigate('cable')
     }
+ 
 
     return (
         <View className="h-full">
@@ -301,17 +327,29 @@ const Dashboard = () => {
                 <View className="bg-slate-950 opacity-60 h-full w-screen absolute z-50">
 
                 </View>
-                <View className="absolute z-50 top-32 h-screen w-screen">
-                    <View className="flex justify-center items-center">
-                        <AlertModal
+                <View className="absolute z-50 top-32 h-full w-full">
+                
+                        <Animated.View style={[animatedStylesalert]} >
+                            <View className="flex justify-center items-center" >
+                            <AlertModal
                             headline={headline}
                             body={body}
                             type={typeofmsg}
                         />
-                        <TouchableOpacity onPress={handlemessage}>
+                         <TouchableOpacity onPress={handlemessage}>
                             <FontAwesome5 name="times-circle" color="#509DFF" size={30} />
                         </TouchableOpacity>
-                    </View>
+
+                            </View>
+                        
+
+                        </Animated.View>
+                            
+                       
+                       
+                        
+                       
+                   
 
                 </View>
 
@@ -362,7 +400,14 @@ const Dashboard = () => {
                     </View>
                     <View className="items-center flex gap-2 flex-row justify-center">
                         <AntDesign name="customerservice" size={30} color="#509DFF" />
-                        <EvilIcons name="bell" size={30} color="#509DFF" />
+                        <TouchableOpacity>
+                        
+                        <EvilIcons name="bell" size={30} color="#509DFF"/>
+                        <View  className="absolute -right-3 " ><Badge className="bg-yellow-500" size={15}>New</Badge></View>
+                        
+
+                        </TouchableOpacity>
+                        
                     </View>
 
                 </View>

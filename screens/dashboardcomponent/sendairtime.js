@@ -371,7 +371,7 @@ const handlecloseConf=(value)=>{
                 contentContainerStyle={{ flexGrow: 1 }}>
                     <View className="mt-5">
                         <Text className={fieldtextone}>Select Network</Text>
-                        <TouchableOpacity onPress={handleshownetwork} className="h-16 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
+                        <TouchableOpacity onPress={handleshownetwork} className="h-12 w-full border rounded-xl bg-slate-100 border-slate-400 items-center justify-between flex flex-row px-3">
                             <Text className={fieldtextone}>{NetworkName || '---'}</Text>
                             
 
@@ -382,7 +382,7 @@ const handlecloseConf=(value)=>{
                         <Text className={fieldtextone}>Select Plan</Text>
                         <TouchableOpacity 
                         onPress={isDisable?null:handleshowplan} 
-                        className="bg-slate-100 h-16 w-full border rounded-xl border-slate-400 items-center justify-between flex flex-row px-3">
+                        className="bg-slate-100 h-12 w-full border rounded-xl border-slate-400 items-center justify-between flex flex-row px-3">
                         <Text className={fieldtextone}>{Planselect || '---'}</Text>
                            
 
@@ -392,7 +392,7 @@ const handlecloseConf=(value)=>{
                     <View className="mt-5">
                         <Text className={fieldtextone}>Enter Amount(min 50naira-max 5000naira)</Text>
                         <TextInput
-                                className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                                className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handleamount(text) }}
                                 keyboardType="numeric"
                             />
@@ -403,7 +403,7 @@ const handlecloseConf=(value)=>{
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                             <Text className={`font-bold ${fieldtextone} text-slate-500`}>Enter Phone Number</Text>
                             <TextInput
-                                className="bg-slate-100 border h-16 rounded-xl border-slate-400 px-3 text-lg"
+                                className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handlephone(text) }}
                                 value={testnumber}
                                 keyboardType="numeric"

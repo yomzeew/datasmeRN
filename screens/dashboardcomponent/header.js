@@ -2,6 +2,7 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { AntDesign, EvilIcons } from '@expo/vector-icons'
 import { fieldtexttwo } from "../services/textsetting"
 import { useNavigation } from "@react-navigation/native"
+import { Badge } from "react-native-paper"
 
 
 const Header = ({ title }) => {
@@ -21,9 +22,16 @@ const Header = ({ title }) => {
 
 
                 <View className="items-center flex gap-2 flex-row justify-center">
-                    <AntDesign name="customerservice" size={30} color="#509DFF" />
-                    <EvilIcons name="bell" size={30} color="#509DFF" />
-                </View>
+                        <AntDesign name="customerservice" size={30} color="#509DFF" />
+                        <TouchableOpacity>
+                        
+                        <EvilIcons name="bell" size={30} color="#509DFF"/>
+                        <View  className="absolute -right-3 " ><Badge className="bg-yellow-500" size={15}>New</Badge></View>
+                        
+
+                        </TouchableOpacity>
+                        
+                    </View>
 
             </View>
 

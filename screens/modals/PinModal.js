@@ -97,6 +97,7 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
     })
     const succesfulOrder = response.data.succesfulOrder;
     const failedOrder = response.data.failedOrder;
+    console.log(response.data)
 
     // failedOrder.forEach((f) => {
     //     const status = f.response.status;
@@ -174,6 +175,7 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
     else if(interfacePin==='exam'){
         console.log(response.data)
         const getreasonfororderskip=response.data.skippedOrder
+        const getsuccessfullOrder=response.data.succesfulOrder
         if(getreasonfororderskip.length>0){
             let getreson=''
             for (let i = 0; i < getreasonfororderskip.length; i++) {
@@ -186,10 +188,18 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
           
 
         }
+        if(getsuccessfullOrder.length>0){
+            setshowstatus(true)
+            seterrormessage(getsuccessfullOrder[0].message)
+            setmessagestatus(getsuccessfullOrder[0].status)
+    
+    
+         }
     }
     else if(interfacePin==='cable'){
         console.log(response.data)
         const getreasonfororderskip=response.data.skippedOrder
+        const getsuccessfullOrder=response.data.succesfulOrder
         if(getreasonfororderskip.length>0){
             let getreson=''
             for (let i = 0; i < getreasonfororderskip.length; i++) {
@@ -202,11 +212,20 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
           
 
         }
+        if(getsuccessfullOrder.length>0){
+            setshowstatus(true)
+            seterrormessage(getsuccessfullOrder[0].message)
+            setmessagestatus(getsuccessfullOrder[0].status)
+    
+    
+         }
+        
     }
         else if(interfacePin==='electricity'){
             console.log('ok')
             console.log(response.data)
             const getreasonfororderskip=response.data.skippedOrder
+            const getsuccessfullOrder=response.data.succesfulOrder
             if(getreasonfororderskip.length>0){
                 let getreson=''
                 for (let i = 0; i < getreasonfororderskip.length; i++) {
@@ -219,6 +238,13 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
               
     
             }
+            if(getsuccessfullOrder.length>0){
+                setshowstatus(true)
+                seterrormessage(getsuccessfullOrder[0].message)
+                setmessagestatus(getsuccessfullOrder[0].status)
+        
+        
+             }
       
 
     }
