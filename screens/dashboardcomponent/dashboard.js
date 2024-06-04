@@ -20,7 +20,8 @@ import Footer from "./footer";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
-import { Badge } from "react-native-paper";
+import { Badge,Button } from "react-native-paper";
+
 
 
 const Dashboard = () => {
@@ -288,6 +289,38 @@ const Dashboard = () => {
     const handlecable = () => {
         navigation.navigate('cable')
     }
+    const bounceValue = useSharedValue(0);
+
+    const animatedStylest = useAnimatedStyle(() => {
+      return {
+        transform: [
+          {
+            translateY: bounceValue.value,
+          },
+        ],
+      };
+    });
+    const handleBounce = () => {
+        bounceValue.value = withSpring(-10, {
+          damping: 2,
+          stiffness: 200,
+          mass: 1,
+        }, () => {
+          bounceValue.value = withSpring(0, {
+            damping: 2,
+            stiffness: 200,
+            mass: 1,
+          });
+        });
+      };
+      useEffect(()=>{
+        const intervalId = setInterval(handleBounce, 2000);
+        return () => clearInterval(intervalId);
+
+      },[])
+      const handlenavigatechat=()=>{
+        navigation.navigate('chatbot')
+      }
  
 
     return (
@@ -392,6 +425,13 @@ const Dashboard = () => {
             }
              <SafeAreaView style={styles.andriod} className="flex-1 flex w-full bg-slate-50">
             <StatusBar style="auto" />
+            <View className="absolute z-50 bottom-32 right-2">
+            <Animated.View style={[animatedStylest]}>
+            <Button className="bg-yellow-500" textColor="white"  icon="robot" mode="elevated" onPress={handlenavigatechat}>
+              Chat Bot
+              </Button>
+                </Animated.View>
+            </View>
            
             <View className="">
                 <View className="flex flex-row justify-between px-5 py-5">

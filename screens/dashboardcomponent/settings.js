@@ -31,12 +31,16 @@ const Settingss = () => {
     const [errormessage,seterrormessage]=useState('')
     const [oldpassword,setoldpassword]=useState('')
     const [password,setpassword]=useState('')
-    const [showold,setshowold]=useState(false)
-    const [shownew,setshownew]=useState(false)
-    const [showoldpin,setshowoldpin]=useState(false)
-    const [shownewpin,setshownewpin]=useState(false)
+    const [showold,setshowold]=useState(true)
+    const [shownew,setshownew]=useState(true)
+    const [showoldpin,setshowoldpin]=useState(true)
+    const [shownewpin,setshownewpin]=useState(true)
     const [pin,setpin]=useState('')
     const [oldpin,setoldpin]=useState('')
+    const [showconfirm,setshowconfirm]=useState(true)
+    const [confirmpassword,setconfirmpassword]=useState('')
+    const [showconfirmpin,setshowconfirmpin]=useState(true)
+    const [confirmpin, setpinconfirm]=useState('')
 
 
 
@@ -214,11 +218,16 @@ const Settingss = () => {
 
                  
         else if (Editplatform==='password'){
+            if (password !== confirmpassword) {
+                seterrormessage('Password and confirmation password do not match.');
+                return;
+              }
+              
+              
             const data={
-                number:phoneno,
-                username:username,
-                email:email,
-                fullname:fullname,
+               oldPassword:oldpassword,
+                newPassword:password,
+                conPassword:confirmpassword,
                 }
                 const mytoken = await AsyncStorage.getItem('mytoken')
                 const mytokenreal = JSON.parse(mytoken)
@@ -231,13 +240,16 @@ const Settingss = () => {
                     })
                     console.log(response.data)
                     if(response.data.status===200){
-                       const myObject= getObjectdata()
-                       myObject.password=password
-                       console.log(myObject)
-                        await AsyncStorage.setItem('passdata',JSON.stringify(myObject))
+                        await AsyncStorage.getItem('passdata').then((storedObject) => {
+                            const storedObj=JSON.parse(storedObject)
+                            const myObject={email:storedObj.email,password:password,status:storedObj.status}
+                            AsyncStorage.setItem('passdata',JSON.stringify(myObject))
+                        })
+                       
                         setViewDone(true)
                         setEditView(false)
                         handleBounce()
+                        seterrormessage('')
                     }
                 
                 }catch(error){
@@ -255,11 +267,14 @@ const Settingss = () => {
 
         }  
         else if (Editplatform==='pin'){
+            if(pin !== confirmpin){
+                seterrormessage('Pin and confirmation pin do not match.');
+                return
+            }
             const data={
-                number:phoneno,
-                username:username,
-                email:email,
-                fullname:fullname,
+                oldPin:oldpin,
+                newPin:pin,
+                conPin:confirmpin,
                 }
                 const mytoken = await AsyncStorage.getItem('mytoken')
                 const mytokenreal = JSON.parse(mytoken)
@@ -272,10 +287,10 @@ const Settingss = () => {
                     })
                     console.log(response.data)
                     if(response.data.status===200){
-                      
                         setViewDone(true)
                         setEditView(false)
                         handleBounce()
+                        seterrormessage('')
                     }
                 
                 }catch(error){
@@ -333,6 +348,7 @@ const Settingss = () => {
                         </View>}
                         {Editplatform==='password' && <View>
                             <View className="items-center"><Text className="font-bold text-red-500">{errormessage}</Text></View>
+                            <ScrollView>
                             <Text className="mt-3">Old Psssword</Text>
                             <View className="w-full">
                                 <View className="absolute right-0 h-12 z-50  justify-center flex px-3">
@@ -345,6 +361,7 @@ const Settingss = () => {
                             secureTextEntry={showold}
                         />
                              </View>
+                             
                            
                         <View className="mt-3">
                         <Text>New Password</Text>
@@ -361,11 +378,31 @@ const Settingss = () => {
                              </View>
                         
                             </View>
+                            <View className="mt-3">
+                        <Text>Confirm Password</Text>
+                        <View className="w-full">
+                                <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
+                                <TouchableOpacity onPress={()=>setshowconfirm(!showconfirm)}>{showconfirm?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                    </View>
+                            
+                                    <TextInput
+                            className="border-slate-400 h-12 text-lg border rounded-lg px-3"
+                            onChangeText={(text)=>setconfirmpassword(text)}
+                            secureTextEntry={showconfirm}
+                            
+                        />
+                             </View>
+                        
+                            </View>
+
+                            </ScrollView>
+                            
                         
 
                         </View>}
                         {Editplatform==='pin' && <View>
                             <View className="items-center"><Text className="font-bold text-red-500">{errormessage}</Text></View>
+                            <ScrollView>
                             <Text className="mt-3">Old Pin</Text>
                             <View className="w-full">
                                 <View className="absolute right-0 h-12 z-50  justify-center flex px-3">
@@ -375,7 +412,10 @@ const Settingss = () => {
                         <TextInput
                             className="border-slate-400 h-12 text-lg border rounded-lg px-3"
                             onChangeText={(text)=>setoldpin(text)}
-                            secureTextEntry={showold}
+                            secureTextEntry={showoldpin}
+                            keyboardType="numeric"
+                            returnKeyType="done"
+                            returnKeyLabel="Done"
                         />
                              </View>
                            
@@ -389,11 +429,34 @@ const Settingss = () => {
                                     <TextInput
                             className="border-slate-400 h-12 text-lg border rounded-lg px-3"
                             onChangeText={(text)=>setpin(text)}
-                            secureTextEntry={shownew}
+                            secureTextEntry={shownewpin}
+                            keyboardType="numeric"
+                            returnKeyType="done"
+                            returnKeyLabel="Done"
                         />
                              </View>
                         
                             </View>
+                            <View className="mt-3">
+                        <Text>Confirm Pin</Text>
+                        <View className="w-full">
+                                <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
+                                <TouchableOpacity onPress={()=>setshowconfirmpin(!showconfirmpin)}>{showconfirmpin?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                    </View>
+                            
+                                    <TextInput
+                            className="border-slate-400 h-12 text-lg border rounded-lg px-3"
+                            onChangeText={(text)=>setpinconfirm(text)}
+                            secureTextEntry={showconfirmpin}
+                            keyboardType="numeric"
+                            returnKeyType="done"
+                            returnKeyLabel="Done"
+                          
+                        />
+                             </View>
+                        
+                            </View>
+                            </ScrollView>
                         
 
                         </View>}

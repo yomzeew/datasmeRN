@@ -23,6 +23,7 @@ import Settingss from './screens/dashboardcomponent/settings';
 import CableTv from './screens/dashboardcomponent/cableTv';
 import ManualFund from './screens/dashboardcomponent/manualfunding';
 import ForgostPassword from './screens/forgotpassword';
+import ChatBot from './screens/dashboardcomponent/chatbot';
 export default function App() {
   const Stack = createStackNavigator();
   return (
@@ -54,6 +55,7 @@ export default function App() {
       <Stack.Screen options={{gestureEnabled:false}} name="transdetail" component={Transactiondetails} /> 
       <Stack.Screen options={{gestureEnabled:false}} name="settings" component={Settingss} /> 
       <Stack.Screen options={{gestureEnabled:false}} name="cable" component={CableTv} /> 
+      <Stack.Screen options={{gestureEnabled:false}} name="chatbot" component={ChatBot} /> 
       
       
       {/* 

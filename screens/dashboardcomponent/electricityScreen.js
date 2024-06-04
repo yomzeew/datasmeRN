@@ -90,7 +90,7 @@ const ElectricScreen=()=>{
     useEffect(() => {
         const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
             setKeyboardStatus(true);
-            sethkey('h-80')
+            sethkey('h-96')
         });
         const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
             setKeyboardStatus(false);
@@ -168,7 +168,8 @@ const ElectricScreen=()=>{
             item.serviceText.toLowerCase()===disconame.toLowerCase()
         ))
         const ServiceID=getdiscosidarray[0].serviceId
-        const datato={serviceID:ServiceID,meterNumber:meternumber,email:email,amount:amount}
+        console.log(ServiceID)       
+        const datato={serviceID:"8000",provider:disconame,meterNumber:meternumber,type:discotype,email:email,amount:amount}
         setdatasend(datato)
         translateYpin.value=withSpring(0)
         handleConfshow()
@@ -294,8 +295,7 @@ const handlecloseConf=(value)=>{
 
                     </View>
                     <View className="mt-3">
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                                 <View>
                                 <Text className={`font-bold ${fieldtextone} text-slate-500`}>Enter Meter Number</Text>
                             <TextInput
