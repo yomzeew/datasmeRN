@@ -25,7 +25,7 @@ const ThanksModal=({closefunc})=>{
             <Text className="text-lg">
                 Thanks for Registration
             </Text>
-            <TouchableOpacity onPress={handlelogin} className="h-12 w-64 bg-blue-500 items-center flex justify-center rounded-xl">
+            <TouchableOpacity onPress={handlelogin} className="h-12 w-64 bg-regal-blue items-center flex justify-center rounded-xl">
                 <Text className="text-lg text-white">Login to Continue</Text>
             </TouchableOpacity>
             </View>

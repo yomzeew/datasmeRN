@@ -10,7 +10,10 @@ module.exports = {
       borderWidth:{
         '1':'1px'
 
-      }
+      },
+      colors: {
+        'regal-blue': '#010bff',
+      },
     },
   },
   plugins: [],

@@ -21,10 +21,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import { Badge,Button } from "react-native-paper";
+import { primaryColor,secondaryColor } from "../services/colortheme";
 
 
 
 const Dashboard = () => {
+    const primary = primaryColor();
+    const secondary= secondaryColor();
+
     const navigation = useNavigation();
     const [gettoken, settoken] = useState('')
     const [showfund, setshowfund] = useState(false)
@@ -336,12 +340,12 @@ const Dashboard = () => {
                             </View>
                             <View className="flex flex-1  items-center px-5 mt-5">
                                 <TouchableOpacity onPress={handleautofund} className="items-center bg-slate-50 rounded-2xl py-3 w-full">
-                                    <MaterialCommunityIcons name="wallet-plus" size={50} color="#509DFF" />
+                                    <MaterialCommunityIcons name="wallet-plus" size={50} color={primary} />
                                     <Text className={`${fieldtexttwo} text-blue-900 font-bold`}>Auto Funding</Text>
                                 </TouchableOpacity>
                                 
                                 <TouchableOpacity  onPress={handlemanualfund} className="items-center bg-slate-100 rounded-2xl py-3 w-full mt-5">
-                                    <MaterialCommunityIcons name="cash-fast" size={40} color="#509DFF" />
+                                    <MaterialCommunityIcons name="cash-fast" size={40} color={primary} />
                                     <Text className={`${fieldtextone} text-blue-900 font-bold`}>Manual Funding</Text>
                                 </TouchableOpacity>
 
@@ -370,7 +374,7 @@ const Dashboard = () => {
                             type={typeofmsg}
                         />
                          <TouchableOpacity onPress={handlemessage}>
-                            <FontAwesome5 name="times-circle" color="#509DFF" size={30} />
+                            <FontAwesome5 name="times-circle" color={primary} size={30} />
                         </TouchableOpacity>
 
                             </View>
@@ -439,10 +443,10 @@ const Dashboard = () => {
                         <TouchableOpacity onPress={handlesetting}><Text className="text-lg font-bold text-blue-950">Hi {username}</Text></TouchableOpacity>
                     </View>
                     <View className="items-center flex gap-2 flex-row justify-center">
-                        <AntDesign name="customerservice" size={30} color="#509DFF" />
+                        <AntDesign name="customerservice" size={30} color="#010bff" />
                         <TouchableOpacity>
                         
-                        <EvilIcons name="bell" size={30} color="#509DFF"/>
+                        <EvilIcons name="bell" size={30} color={primary}/>
                         <View  className="absolute -right-3 " ><Badge className="bg-yellow-500" size={15}>New</Badge></View>
                         
 
@@ -457,7 +461,7 @@ const Dashboard = () => {
             </View>
             <View className="flex-1 px-3">
                 <LinearGradient
-                    colors={['#509DFF', '#60A6FF', '#60A6FF']}
+                    colors={[secondary, primary, primary]}
                     className="h-24 rounded-2xl w-full px-5 flex justify-center"
                 >
                     <View className="flex  flex-row justify-between">
@@ -497,7 +501,7 @@ const Dashboard = () => {
                             <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
 
 
-                            <View className="absolute h-12 w-12 items-center flex justify-center"><Entypo name="wallet" size={24} color="#509DFF" /></View>
+                            <View className="absolute h-12 w-12 items-center flex justify-center"><Entypo name="wallet" size={24} color={primary} /></View>
 
                         </View>
 
@@ -506,7 +510,7 @@ const Dashboard = () => {
                     <TouchableOpacity onPress={handletranshistory} className="items-center px-5">
                         <View>
                             <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
-                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="filetext1" size={30} color="#509DFF" /></View>
+                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="filetext1" size={30} color={primary} /></View>
 
                         </View>
                         
@@ -516,7 +520,7 @@ const Dashboard = () => {
                     <TouchableOpacity onPress={handleshowrefer} className="items-center px-5">
                         <View>
                             <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
-                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="addusergroup" size={24} color="#509DFF" /></View>
+                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="addusergroup" size={24} color={primary} /></View>
 
                         </View>
                         
@@ -531,7 +535,7 @@ const Dashboard = () => {
                                 <View>
                                     <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <AntDesign name="mobile1" size={30} color="#509DFF" /></View>
+                                    <AntDesign name="mobile1" size={30} color={primary} /></View>
 
                                 </View>
                                
@@ -541,7 +545,7 @@ const Dashboard = () => {
                                 <View>
                                     <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <AntDesign name="filetext1" size={30} color="#509DFF" /></View>
+                                    <AntDesign name="filetext1" size={30} color={primary} /></View>
 
                                 </View>
                                
@@ -554,7 +558,7 @@ const Dashboard = () => {
                                 <View>
                                     <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <Entypo name="old-mobile" size={30} color="#509DFF" /></View>
+                                    <Entypo name="old-mobile" size={30} color={primary} /></View>
 
                                 </View>
                                
@@ -564,7 +568,7 @@ const Dashboard = () => {
                                 <View>
                                     <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <Entypo name="open-book" size={30} color="#509DFF" /></View>
+                                    <Entypo name="open-book" size={30} color={primary} /></View>
 
                                 </View>
                                
@@ -576,7 +580,7 @@ const Dashboard = () => {
                                 <View>
                                     <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <MaterialIcons name="electrical-services" size={30} color="#509DFF" /></View>
+                                    <MaterialIcons name="electrical-services" size={30} color={primary} /></View>
 
                                 </View>
                              
@@ -586,7 +590,7 @@ const Dashboard = () => {
                                 <View>
                                     <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <Entypo name="tv" size={30} color="#509DFF" /></View>
+                                    <Entypo name="tv" size={30} color={primary} /></View>
                                     
 
                                 </View>

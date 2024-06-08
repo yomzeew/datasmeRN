@@ -151,7 +151,7 @@ const RegisterPage=({navigation})=>{
     }
     
     return(
-        <SafeAreaView style={styles.andriod}  className="flex-1 flex w-screen bg-blue-500">
+        <SafeAreaView style={styles.andriod}  className="flex-1 flex w-screen bg-regal-blue">
             <StatusBar style="dark" />
            {showmodal &&<View className="absolute z-50 w-full items-center top-60">
             <ThanksModal
@@ -262,7 +262,7 @@ const RegisterPage=({navigation})=>{
           color={isChecked ? '#4630EB' : undefined}
         />
             </View>
-            <TouchableOpacity onPress={submitSignup} className="bg-blue-600 w-80 mt-3 items-center h-12 flex justify-center rounded-2xl">
+            <TouchableOpacity onPress={submitSignup} className="bg-regal-blue w-80 mt-3 items-center h-12 flex justify-center rounded-2xl">
                 {!preloader?<Text className={`text-cyan-300 ${fieldtexttwo}  font-bold`}>Submit</Text>:<Preloadertwo/>}
             </TouchableOpacity>
            

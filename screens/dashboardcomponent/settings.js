@@ -10,7 +10,9 @@ import { updatedetails, updatepass, updatepin, userdetails } from "../services/e
 import axios from "axios"
 import Preloadertwo from "../preloadertwo"
 import Header from "./header"
+import { primaryColor } from "../services/colortheme"
 const Settingss = () => {
+    const primary=primaryColor()
     const navigation = useNavigation()
 
     const [email, setemail] = useState('')
@@ -352,7 +354,7 @@ const Settingss = () => {
                             <Text className="mt-3">Old Psssword</Text>
                             <View className="w-full">
                                 <View className="absolute right-0 h-12 z-50  justify-center flex px-3">
-                                <TouchableOpacity onPress={()=>setshowold(!showold)}>{showold?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                <TouchableOpacity onPress={()=>setshowold(!showold)}>{showold?<FontAwesome5 name="eye" size={20} color={primary} />:<FontAwesome5 name="eye-slash" size={20} color={primary} />}</TouchableOpacity>
                                     </View>
                             
                         <TextInput
@@ -367,7 +369,7 @@ const Settingss = () => {
                         <Text>New Password</Text>
                         <View className="w-full">
                                 <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
-                                <TouchableOpacity onPress={()=>setshownew(!shownew)}>{shownew?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                <TouchableOpacity onPress={()=>setshownew(!shownew)}>{shownew?<FontAwesome5 name="eye" size={20} color={primary} />:<FontAwesome5 name="eye-slash" size={20} color={primary} />}</TouchableOpacity>
                                     </View>
                             
                                     <TextInput
@@ -382,7 +384,7 @@ const Settingss = () => {
                         <Text>Confirm Password</Text>
                         <View className="w-full">
                                 <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
-                                <TouchableOpacity onPress={()=>setshowconfirm(!showconfirm)}>{showconfirm?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                <TouchableOpacity onPress={()=>setshowconfirm(!showconfirm)}>{showconfirm?<FontAwesome5 name="eye" size={20} color={primary} />:<FontAwesome5 name="eye-slash" size={20} color={primary} />}</TouchableOpacity>
                                     </View>
                             
                                     <TextInput
@@ -406,7 +408,7 @@ const Settingss = () => {
                             <Text className="mt-3">Old Pin</Text>
                             <View className="w-full">
                                 <View className="absolute right-0 h-12 z-50  justify-center flex px-3">
-                                <TouchableOpacity onPress={()=>setshowoldpin(!showoldpin)}>{showoldpin?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                <TouchableOpacity onPress={()=>setshowoldpin(!showoldpin)}>{showoldpin?<FontAwesome5 name="eye" size={20} color={primary} />:<FontAwesome5 name="eye-slash" size={20} color={primary} />}</TouchableOpacity>
                                     </View>
                             
                         <TextInput
@@ -423,7 +425,7 @@ const Settingss = () => {
                         <Text>New Pin</Text>
                         <View className="w-full">
                                 <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
-                                <TouchableOpacity onPress={()=>setshownewpin(!shownewpin)}>{shownewpin?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                <TouchableOpacity onPress={()=>setshownewpin(!shownewpin)}>{shownewpin?<FontAwesome5 name="eye" size={20} color={primary} />:<FontAwesome5 name="eye-slash" size={20} color={primary} />}</TouchableOpacity>
                                     </View>
                             
                                     <TextInput
@@ -440,8 +442,9 @@ const Settingss = () => {
                             <View className="mt-3">
                         <Text>Confirm Pin</Text>
                         <View className="w-full">
+                            
                                 <View className="absolute right-0 h-12 z-50 justify-center flex px-3">
-                                <TouchableOpacity onPress={()=>setshowconfirmpin(!showconfirmpin)}>{showconfirmpin?<FontAwesome5 name="eye" size={20} color="#509DFF" />:<FontAwesome5 name="eye-slash" size={20} color="#509DFF" />}</TouchableOpacity>
+                                <TouchableOpacity onPress={()=>setshowconfirmpin(!showconfirmpin)}>{showconfirmpin?<FontAwesome5 name="eye" size={20} color={primary} />:<FontAwesome5 name="eye-slash" size={20} color={primary} />}</TouchableOpacity>
                                     </View>
                             
                                     <TextInput
@@ -460,7 +463,7 @@ const Settingss = () => {
                         
 
                         </View>}
-                        <TouchableOpacity onPress={HandleUpdate} className="h-12 bg-blue-600 mt-3 rounded-xl flex justify-center items-center">{loaderupdate?<Preloadertwo/>:<Text className="text-white font-bold py-3 text-center">Update</Text>}</TouchableOpacity>
+                        <TouchableOpacity onPress={HandleUpdate} className="h-12 bg-regal-blue mt-3 rounded-xl flex justify-center items-center">{loaderupdate?<Preloadertwo/>:<Text className="text-white font-bold py-3 text-center">Update</Text>}</TouchableOpacity>
 
                         </View>
                        
@@ -480,7 +483,7 @@ const Settingss = () => {
                 <View className="bg-slate-50 px-3 w-44 py-3 abosolute z-50 rounded-xl">
                        
                        <Animated.View style={[animatedStyles ]} className="h-16 flex justify-center items-center">
-                       <AntDesign name="checkcircle" size={30} color="#509DFF" />
+                       <AntDesign name="checkcircle" size={30} color={primary} />
                         <Text className={`${fieldtexttwo} font-semibold`}>Done</Text>
                         </Animated.View>
                        </View>
@@ -497,7 +500,7 @@ const Settingss = () => {
                     <Preloadertwo />
                 </View>
             }
-            <SafeAreaView style={styles.andriod} className="flex-1 w-screen h-full bg-slate-50">
+            <SafeAreaView style={styles.andriod} className="flex-1 flex w-screen h-full bg-slate-50">
                 <StatusBar style="dark" />
 
                 {showupdate && <View className="h-full w-full absolute flex justify-center items-center z-50 ">
@@ -511,7 +514,8 @@ const Settingss = () => {
                 <Header
                     title={'Settings'}
                 />
-                <View>
+                <View className="flex-1">
+                    <ScrollView showsVerticalScrollIndicator={false}>
                     <View className="flex flex-row justify-between px-5 mt-5">
                         <View>
                             <FontAwesome name="user" size={80} color="black" />
@@ -557,7 +561,7 @@ const Settingss = () => {
                                 </View>
                                 <View className="flex flex-row">
                                     <TouchableOpacity onPress={()=>handleupdate('phoneno')}>
-                                        <Entypo name="edit" size={24} color="#509DFF" />
+                                        <Entypo name="edit" size={24} color={primary} />
                                         <Text>Edit</Text>
                                     </TouchableOpacity>
 
@@ -582,7 +586,7 @@ const Settingss = () => {
 
                             </View>
                             <TouchableOpacity onPress={handleshowbvn}>
-                                <FontAwesome5 name="eye-slash" size={24} color="#509DFF" />
+                                <FontAwesome5 name="eye-slash" size={24} color={primary} />
                             </TouchableOpacity>
 
                         </View>
@@ -594,7 +598,7 @@ const Settingss = () => {
                             </View>
                             <View className="flex flex-row">
                                     <TouchableOpacity onPress={()=>handleupdate('password')}>
-                                        <Entypo name="edit" size={24} color="#509DFF" />
+                                        <Entypo name="edit" size={24} color={primary} />
                                         <Text>Edit</Text>
                                     </TouchableOpacity>
 
@@ -610,7 +614,7 @@ const Settingss = () => {
                             </View>
                             <View className="flex flex-row">
                                     <TouchableOpacity onPress={()=>handleupdate('pin')}>
-                                        <Entypo name="edit" size={24} color="#509DFF" />
+                                        <Entypo name="edit" size={24} color={primary} />
                                         <Text>Edit</Text>
                                     </TouchableOpacity>
 
@@ -622,33 +626,22 @@ const Settingss = () => {
                     </View>
                     <View className="mt-3 items-center">
                         <TouchableOpacity onPress={Enrollfunction} className="items-center flex justify-center border-b border-b-blue-300">
-                            <Text className={`${fieldtextone} text-blue-600`}>Enroll Your Biometric</Text>
+                            <Text className={`${fieldtextone} text-regal-blue`}>Enroll Your Biometric</Text>
                         </TouchableOpacity>
 
                     </View>
 
                     <View className="mt-5 items-center">
-                        <TouchableOpacity onPress={handlelogout} className="bg-blue-600 px-2 py-2 rounded-xl w-24 items-center flex justify-center">
+                        <TouchableOpacity onPress={handlelogout} className="bg-regal-blue px-2 py-2 rounded-xl w-24 items-center flex justify-center">
                             <Text className={`${fieldtextone} text-white`}>Sign Out</Text>
                         </TouchableOpacity>
 
                     </View>
-
-
-
-                </View>
-                <View>
-
+                    </ScrollView>
 
 
                 </View>
-                <View>
-
-                </View>
-                <View>
-
-
-                </View>
+                
 
 
 

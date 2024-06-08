@@ -420,7 +420,7 @@ useEffect(()=>{
                                
                                </View>
 
-                           <TouchableOpacity disabled={decodername===''?true:false} onPress={decodername?handlesubmit:null} className={`${decodername?'bg-blue-500':'bg-blue-300'} w-full  items-center h-10 rounded-xl mt-3 flex justify-center`}>
+                           <TouchableOpacity disabled={decodername===''?true:false} onPress={decodername?handlesubmit:null} className={`${decodername?'bg-regal-blue':'bg-blue-300'} w-full  items-center h-10 rounded-xl mt-3 flex justify-center`}>
                                <Text className={`text-white ${fieldtextone}`}>CONTINUE</Text>
                            </TouchableOpacity>
 

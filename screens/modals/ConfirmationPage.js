@@ -141,7 +141,7 @@ const handlewallet=()=>{
                 </View>
              
                 <View className="px-2 w-full items-center mt-3">
-                    <View className="bg-blue-600 h-12 w-12 rounded-full flex justify-center items-center">
+                    <View className="bg-regal-blue h-12 w-12 rounded-full flex justify-center items-center">
                     <FontAwesome name="exchange" size={24} color="white" />
                     </View>
                     <Text className={`${fieldtextone} font-semibold`}>Coming Soon</Text>

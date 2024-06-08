@@ -9,6 +9,7 @@ import { fieldtextone, fieldtexttwo } from "./services/textsetting";
 import { StatusBar } from 'expo-status-bar';
 import * as LocalAuthentication from 'expo-local-authentication'
 import { useFocusEffect } from "@react-navigation/native";
+import { primaryColor } from "./services/colortheme";
 
 
 
@@ -208,7 +209,7 @@ const LoginPage=({navigation})=>{
                             <TouchableOpacity onPress={cancelHandle}><Text className="text-white font-bold py-3 text-center">OK</Text></TouchableOpacity>
                         </View>
                         </View>}
-        <SafeAreaView style={styles.andriod} className="flex-1 flex w-screen bg-blue-500 ">
+        <SafeAreaView style={styles.andriod} className="flex-1 flex w-screen bg-regal-blue ">
             <StatusBar style="dark" />
            
         <ScrollView 
@@ -256,8 +257,9 @@ const LoginPage=({navigation})=>{
                 />
             </View>
             </View> 
+           
            <TouchableOpacity onPress={handlefingerprint} className="mt-3 flex flex-row">
-            <Entypo name="fingerprint" size={30} color="#509DFF" />
+            <Entypo name="fingerprint" size={30} color={primaryColor} />
                 <Text className={`${fieldtextone} text-blue-700`}>  
                  Login with fingerprint
                 </Text>
@@ -265,7 +267,7 @@ const LoginPage=({navigation})=>{
              
                 </TouchableOpacity>
             
-            <TouchableOpacity onPress={submitlogin} className="bg-blue-600 w-80 mt-3 items-center h-12 flex justify-center rounded-2xl">
+            <TouchableOpacity onPress={submitlogin} className="bg-regal-blue w-80 mt-3 items-center h-12 flex justify-center rounded-2xl">
                 <Text className={`text-cyan-300  ${fieldtextone} font-bold`}>{!preloader?<Preloadertwo/>:'Login'}</Text>
             </TouchableOpacity>
             <View className="flex flex-row justify-between">

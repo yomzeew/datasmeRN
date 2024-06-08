@@ -261,7 +261,7 @@ const animatedStylespin = useAnimatedStyle(() => ({
                         </KeyboardAvoidingView>
                     </View>
 
-                            <TouchableOpacity onPress={handlesubmit}  className="w-full bg-blue-500 items-center h-10 rounded-xl mt-3 flex justify-center">
+                            <TouchableOpacity onPress={handlesubmit}  className="w-full bg-regal-blue items-center h-10 rounded-xl mt-3 flex justify-center">
                                     <Text className={`text-white ${fieldtextone}`}>CONTINUE</Text>
                                 </TouchableOpacity>
         

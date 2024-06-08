@@ -110,7 +110,7 @@ const handleselectindexplan=(value)=>{
             </View>
 
             }
-             <TouchableOpacity onPress={handleclose} className="mt-5 w-full bg-blue-500 items-center h-10 rounded-xl flex justify-center">
+             <TouchableOpacity onPress={handleclose} className="mt-5 w-full bg-regal-blue items-center h-10 rounded-xl flex justify-center">
                             <Text className={`text-white ${fieldtextone}`}>SAVE PLAN</Text>
                         </TouchableOpacity>
 

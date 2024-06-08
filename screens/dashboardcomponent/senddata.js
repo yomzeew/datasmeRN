@@ -179,11 +179,11 @@ const SendData = () => {
         
     }
     useEffect(() => {
-        const text = testnumber.replace(/-/g, ''); // Remove existing hyphens
+        const text = testnumber.replace(/[-\s]/g, ''); // Remove existing hyphens and spaces
         let formattedNumber = '';
         for (let i = 0; i < text.length; i++) {
             if (i > 0 && i % 11 === 0) { // Add hyphen after every 11 characters
-                formattedNumber += '-';
+                formattedNumber += ' - ';
             }
             formattedNumber += text[i];
         }
@@ -402,7 +402,7 @@ const handlecloseConf=(value)=>{
             {(showmodal || showbulk ||showConf) && <View className="bg-slate-400 h-full w-full absolute z-40 opacity-70 flex justify-center items-center"></View>}
             
             <View className="flex gap-5  justify-center mt-5 flex-row">
-                <TouchableOpacity className="bg-blue-500  rounded-xl h-10 px-3 items-center flex justify-center">
+                <TouchableOpacity className="bg-regal-blue  rounded-xl h-10 px-3 items-center flex justify-center">
                     <Text className="text-white">Single Purchase</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handlebulkshow} className="bg-white text-white rounded-xl h-10 px-3 items-center flex justify-center">
@@ -456,7 +456,7 @@ const handlecloseConf=(value)=>{
                             />
                         </KeyboardAvoidingView>
                     </View>
-                    <TouchableOpacity onPress={handleConfshow} className="w-full bg-blue-500 items-center h-10 rounded-xl mt-3 flex justify-center">
+                    <TouchableOpacity onPress={handleConfshow} className="w-full bg-regal-blue items-center h-10 rounded-xl mt-3 flex justify-center">
                             <Text className={`text-white ${fieldtextone}`}>CONTINUE</Text>
                         </TouchableOpacity>
 

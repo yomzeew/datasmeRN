@@ -127,7 +127,7 @@ useEffect(()=>{
                                 onChangeText={(text) => { handleamount(text) }}
                                 keyboardType="numeric"
                             />
-                            <TouchableOpacity onPress={handlecloseamount} className="bg-blue-500 mt-3 w-64 h-10 items-center flex justify-center rounded-xl">
+                            <TouchableOpacity onPress={handlecloseamount} className="bg-regal-blue mt-3 w-64 h-10 items-center flex justify-center rounded-xl">
                                 <Text className={`${fieldtextone} text-white`}>Submit</Text>
                             </TouchableOpacity>
 
@@ -172,7 +172,7 @@ useEffect(()=>{
             </View>
 
             }
-             <TouchableOpacity onPress={handleclose} className="mt-5 w-full bg-blue-500 items-center h-10 rounded-xl flex justify-center">
+             <TouchableOpacity onPress={handleclose} className="mt-5 w-full bg-regal-blue items-center h-10 rounded-xl flex justify-center">
                             <Text className={`text-white ${fieldtextone}`}>SAVE PLAN</Text>
                         </TouchableOpacity>
 
