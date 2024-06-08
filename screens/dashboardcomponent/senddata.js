@@ -197,7 +197,7 @@ const SendData = () => {
     if (!testnumber) {
         return;
     }
-    const text = testnumber.replace(/-/g, '');
+    const text = testnumber.replace(/[-\s]/g, ''); 
     const arrayphone = text.match(/.{1,11}/g);
     let valuephone = "";
     let arraybeneciaryy=[]

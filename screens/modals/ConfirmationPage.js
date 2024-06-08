@@ -222,7 +222,7 @@ const handlewallet=()=>{
                    
                 </View>
                 <View className="px-2">
-                    <TouchableOpacity onPress={handleshowpin} className="bg-blue-600 h-16 w-full items-center flex justify-center mt-3 rounded-xl">
+                    <TouchableOpacity onPress={handleshowpin} className="bg-regal-blue h-16 w-full items-center flex justify-center mt-3 rounded-xl">
                         <Text className="text-white">Pay &#8358;{totalamount}</Text>
                     </TouchableOpacity>
                 </View>

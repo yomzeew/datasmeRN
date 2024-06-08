@@ -84,7 +84,7 @@ const BvnScreen=({close})=>{
             <TouchableOpacity onPress={handleshowdate} className="bg-blue-500 items-center h-10 flex justify-center rounded-2xl">
                 <Text className={`${fieldtextone} text-white`}>Select Date of Birth</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handlesubmit} className="bg-blue-900 items-center mt-5 h-10 flex justify-center rounded-2xl">
+                <TouchableOpacity onPress={handlesubmit} className="bg-regal-blue items-center mt-5 h-10 flex justify-center rounded-2xl">
                 <Text className={`${fieldtextone} text-white`}>Request</Text>
                 </TouchableOpacity>
         
