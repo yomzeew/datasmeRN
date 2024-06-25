@@ -1,5 +1,25 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
     import { createStackNavigator } from '@react-navigation/stack';
+    import Home from './screens/home';
+    import Slider from './screens/sliders';
+    import LoginPage from './screens/login';
+    import WelcomePage from './screens/welcomepage';
+    import RegisterPage from './screens/register';
+    import Dashboard from './screens/dashboardcomponent/dashboard';
+    import SendData from './screens/dashboardcomponent/senddata';
+    import SendAirtime from './screens/dashboardcomponent/sendairtime';
+    import ExamPinScreen from './screens/dashboardcomponent/examPinscreen';
+    import ElectricScreen from './screens/dashboardcomponent/electricityScreen';
+    import AutoFund from './screens/dashboardcomponent/autofundscreen';
+    import TransHistory from './screens/dashboardcomponent/transactionhistory';
+    import TransHistorytwo from './screens/dashboardcomponent/transhistorytwo';
+    import Transactiondetails from './screens/dashboardcomponent/transactiondetails';
+    import Settingss from './screens/dashboardcomponent/settings';
+    import CableTv from './screens/dashboardcomponent/cableTv';
+    import ManualFund from './screens/dashboardcomponent/manualfunding';
+    import ForgostPassword from './screens/forgotpassword';
+    import ChatBot from './screens/dashboardcomponent/chatbot';
 const NavigatorWrapper=()=>{
     const Stack = createStackNavigator();
     return(
