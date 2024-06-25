@@ -9,7 +9,7 @@ import { isLessThanOneHour } from "../services/expireTimestamp";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import { fieldtextfour, fieldtextone, fieldtextthree, fieldtexttwo } from "../services/textsetting";
-import { userdetails } from "../services/endpoints";
+import { pushurl, userdetails } from "../services/endpoints";
 import axios from "axios";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import BvnScreen from "./BVnScreen";
@@ -22,8 +22,17 @@ import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import { Badge,Button } from "react-native-paper";
 import { primaryColor,secondaryColor } from "../services/colortheme";
+import * as Notifications from "expo-notifications";
+import * as Device from 'expo-device';
+import Constants from 'expo-constants';
 
-
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
 
 const Dashboard = () => {
     const primary = primaryColor();
@@ -49,6 +58,62 @@ const Dashboard = () => {
     const [typeofmsg, settypeofmsg] = useState('')
     const [showAlert, setshowAlert] = useState(true)
     const [showrefer, setshowrefer] = useState('')
+    const [expoPushToken, setExpoPushToken] = useState("");
+    
+  
+    useEffect(() => {
+    console.log("Registering for push notifications...");
+    registerForPushNotificationsAsync()
+      .then((token) => {
+        console.log("token: ", token);
+        setExpoPushToken(token);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  async function registerForPushNotificationsAsync() {
+    let token;
+    
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+       
+      });
+    }
+  
+
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      // Learn more about projectId:
+      // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
+      token = (
+        await Notifications.getExpoPushTokenAsync({
+          projectId:"94c9974d-c420-41f9-8708-a1faf209a253",
+        })
+      ).data;
+      console.log(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    return token;
+  }
+
+
+
+    
     const functiongetExp = async () => {
         const getTime = await AsyncStorage.getItem('mytimestamp')
         const checktoken = isLessThanOneHour(parseInt(getTime, 10))
@@ -61,9 +126,19 @@ const Dashboard = () => {
             const mytokenreal = JSON.parse(mytoken)
             settoken(mytokenreal)
             console.log(mytokenreal)
-        }
+      const data = { token: expoPushToken, tokenType: "app" };
+      const response = await axios.post(`${pushurl}`, data, {
+        headers: {
+          Authorization: `Bearer ${mytokenreal}`,
+        },
+      });
+  
+      console.log(response.data);
+   
+        
 
     }
+}
     const getuserdetailfunc = async () => {
         try {
             setloader(false)
@@ -99,10 +174,20 @@ const Dashboard = () => {
             setloader(true)
         }
     }
+    useEffect(()=>{
+        if(!expoPushToken){
+          return
+        }else{
+            functiongetExp();
+    
+        }
+       
+      },[expoPushToken])
     useEffect(() => {
-        functiongetExp();
+        
         console.log(gettoken)
         getuserdetailfunc()
+        
 
     }, [])
 
@@ -325,6 +410,21 @@ const Dashboard = () => {
       const handlenavigatechat=()=>{
         navigation.navigate('chatbot')
       }
+      const formatAmount = (text) => {
+        // Remove non-numeric characters except for dots (for decimals)
+        const cleaned = text.replace(/[^0-9.]/g, '');
+      
+        // Split integer and decimal parts
+        const [integerPart, decimalPart] = cleaned.split('.');
+      
+        // Format integer part with commas
+        const formattedIntegerPart = new Intl.NumberFormat('en-US').format(integerPart || '0');
+      
+        // Return formatted amount with the decimal part if it exists
+        return decimalPart !== undefined
+          ? `${formattedIntegerPart}.${decimalPart}`
+          : formattedIntegerPart;
+      };
  
 
     return (
@@ -471,7 +571,7 @@ const Dashboard = () => {
 
                             </View>
                             <View className="flex flex-row gap-3 items-center">
-                                <Text className="font-bold text-lg text-white">{loaderbal ? <Text>&#8358;{getAccount}</Text>  : <Preloader />}</Text>
+                                <Text className="font-bold text-lg text-white">{loaderbal ? <Text>&#8358;{formatAmount(getAccount)}</Text>  : <Preloader />}</Text>
                                 <TouchableOpacity onPress={handlebalance}>
                                     <Fontisto name="spinner-refresh" size={16} color="white" />
                                 </TouchableOpacity>
@@ -498,10 +598,10 @@ const Dashboard = () => {
                 <View className="bg-white mt-2 rounded-2xl flex flex-row justify-between items-center w-full h-32">
                     <TouchableOpacity onPress={handleshowfund} className="items-center px-5 ">
                         <View>
-                            <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+                            <View className="bg-regal-blue rounded-full h-12 w-12" />
 
 
-                            <View className="absolute h-12 w-12 items-center flex justify-center"><Entypo name="wallet" size={24} color={primary} /></View>
+                            <View className="absolute h-12 w-12 items-center flex justify-center"><Entypo name="wallet" size={24} color="white" /></View>
 
                         </View>
 
@@ -509,8 +609,8 @@ const Dashboard = () => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handletranshistory} className="items-center px-5">
                         <View>
-                            <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
-                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="filetext1" size={30} color={primary} /></View>
+                            <View className="bg-regal-blue rounded-full h-12 w-12" />
+                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="filetext1" size={30} color="white" /></View>
 
                         </View>
                         
@@ -519,8 +619,8 @@ const Dashboard = () => {
 
                     <TouchableOpacity onPress={handleshowrefer} className="items-center px-5">
                         <View>
-                            <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
-                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="addusergroup" size={24} color={primary} /></View>
+                            <View className="bg-regal-blue rounded-full h-12 w-12" />
+                            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="addusergroup" size={24} color="white" /></View>
 
                         </View>
                         
@@ -533,9 +633,9 @@ const Dashboard = () => {
                         <View className="items-center">
                             <TouchableOpacity onPress={handlesubdata} className="items-center">
                                 <View>
-                                    <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+                                    <View className="bg-regal-blue rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <AntDesign name="mobile1" size={30} color={primary} /></View>
+                                    <AntDesign name="mobile1" size={30} color="white" /></View>
 
                                 </View>
                                
@@ -543,9 +643,9 @@ const Dashboard = () => {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={handletranshistory} className="items-center mt-10  ">
                                 <View>
-                                    <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+                                    <View className=" bg-regal-blue rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <AntDesign name="filetext1" size={30} color={primary} /></View>
+                                    <AntDesign name="filetext1" size={30} color="white" /></View>
 
                                 </View>
                                
@@ -556,9 +656,9 @@ const Dashboard = () => {
                         <View className="items-center">
                             <TouchableOpacity onPress={handleairtime} className="items-center">
                                 <View>
-                                    <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+                                    <View className="bg-regal-blue rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <Entypo name="old-mobile" size={30} color={primary} /></View>
+                                    <Entypo name="old-mobile" size={30} color="white" /></View>
 
                                 </View>
                                
@@ -566,9 +666,9 @@ const Dashboard = () => {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={handleexam} className="items-center mt-10">
                                 <View>
-                                    <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+                                    <View className="bg-regal-blue rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <Entypo name="open-book" size={30} color={primary} /></View>
+                                    <Entypo name="open-book" size={30} color="white" /></View>
 
                                 </View>
                                
@@ -578,9 +678,9 @@ const Dashboard = () => {
                         <View className="items-center">
                             <TouchableOpacity onPress={handleelect} className="items-center">
                                 <View>
-                                    <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+                                    <View className=" bg-regal-blue rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <MaterialIcons name="electrical-services" size={30} color={primary} /></View>
+                                    <MaterialIcons name="electrical-services" size={30} color="white" /></View>
 
                                 </View>
                              
@@ -588,9 +688,9 @@ const Dashboard = () => {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={handlecable} className="items-center mt-10">
                                 <View>
-                                    <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+                                    <View className="bg-regal-blue rounded-full h-12 w-12" />
                                     <View className="absolute h-12 w-12 items-center flex justify-center">
-                                    <Entypo name="tv" size={30} color={primary} /></View>
+                                    <Entypo name="tv" size={30} color="white" /></View>
                                     
 
                                 </View>

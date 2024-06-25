@@ -164,6 +164,11 @@ const animatedStylespin = useAnimatedStyle(() => ({
     
     
     }
+    const handlecloseall=(value)=>{
+        setshowConf(value)
+        console.log('ok')
+        setshowpin(value)
+    }
     return(
         <View className="h-full">
             {loader &&
@@ -207,6 +212,7 @@ const animatedStylespin = useAnimatedStyle(() => ({
             senddata={datasend}
             close={(value) => handlecloseConf(value)}
             interfacePin={'exam'}
+            closeall={(value)=>handlecloseall(value)}
             />
 
             </Animated.View>

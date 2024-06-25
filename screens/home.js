@@ -46,7 +46,8 @@ const Home=({navigation})=>{
             <View className="flex-1 flex justify-center items-center ">
                 <View className="">
                <View className="items-center">
-                <Text className="text-white font-bold text-2xl">DatabaseSme</Text>
+                <Image source={require('./images/logowhite.png')} className="w-24 h-12" resizeMode="contain"/>
+                
                 </View>
             <View>
             <Text className="text-white text-xs" >Buy Data and Airtime with easy</Text>

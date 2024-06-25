@@ -1,8 +1,7 @@
 import { View,Text,Keyboard,TextInput,TouchableOpacity } from "react-native"
 import { fieldtextone, fieldtexttwo } from "../services/textsetting"
-import { AntDesign,Feather} from '@expo/vector-icons';
+import { AntDesign,Feather,FontAwesome5,MaterialIcons} from '@expo/vector-icons';
 import { useRef, useState,useEffect} from "react"
-import { FontAwesome5} from "@expo/vector-icons"
 import axios from "axios"
 import { buydataurl } from "../services/endpoints"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -10,7 +9,7 @@ import Preloadertwo from "../preloadertwo"
 import Statuspage from "./StatusPage";
 
 
-const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatform})=>{
+const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatform,closeall})=>{
     const [hideinput,sethideinput]=useState(false)
     const [pin,setpin]=useState('')
     const [errormessage,seterrormessage]=useState('')
@@ -65,6 +64,12 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
     
     
       },[])
+      const handleallclose=()=>{
+       
+        closeall(false)
+        
+        
+      }
     const onPress=async(value)=>{
     if (!isNaN(value)) {
         if(pin.length<4){
@@ -131,8 +136,10 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
 
     }
     
-    const getreasonfororderskip=response.data.skippedOrder
-    const getsuccessfullOrder=response.data.succesfulOrder
+    const getreasonfororderskip=response.data?.skippedOrder
+    const getsuccessfullOrder=response.data?.succesfulOrder
+    const getfailOrder=response.data?.failedOrder
+    console.log(getfailOrder)
     console.log(getsuccessfullOrder)
    
     let getPlan=[]
@@ -166,16 +173,22 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
      }
      if(getsuccessfullOrder.length>0){
         setshowstatus(true)
-        seterrormessage(getsuccessfullOrder[0].message)
-        setmessagestatus(getsuccessfullOrder[0].status)
+        seterrormessage(getsuccessfullOrder[0]?.response?.message)
+        setmessagestatus(getsuccessfullOrder[0]?.status)
+        
 
 
      }
+     if (getfailOrder.length>0){
+        setshowstatus(true)
+        seterrormessage(getfailOrder[0]?.response?.message)
+        setmessagestatus(getfailOrder[0]?.status)
+     }
     }
     else if(interfacePin==='exam'){
-        console.log(response.data)
-        const getreasonfororderskip=response.data.skippedOrder
-        const getsuccessfullOrder=response.data.succesfulOrder
+        const getreasonfororderskip=response.data?.skippedOrder
+        const getsuccessfullOrder=response.data?.succesfulOrder
+        const getfailOrder=response.data?.failedOrder
         if(getreasonfororderskip.length>0){
             let getreson=''
             for (let i = 0; i < getreasonfororderskip.length; i++) {
@@ -190,42 +203,51 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
         }
         if(getsuccessfullOrder.length>0){
             setshowstatus(true)
-            seterrormessage(getsuccessfullOrder[0].message)
+            seterrormessage(getsuccessfullOrder[0]?.response?.message)
+            setmessagestatus(getsuccessfullOrder[0]?.status)
+    
+    
+         }
+         if (getfailOrder.length>0){
+            setshowstatus(true)
+            seterrormessage(getfailOrder[0]?.response?.message)
+            setmessagestatus(getfailOrder[0]?.status)
+         }
+    }
+    else if(interfacePin==='cable'){
+        const getreasonfororderskip=response.data?.skippedOrder
+    const getsuccessfullOrder=response.data?.succesfulOrder
+    const getfailOrder=response.data?.failedOrder
+        if(getreasonfororderskip.length>0){
+            let getreson=''
+            for (let i = 0; i < getreasonfororderskip.length; i++) {
+                const element = getreasonfororderskip[i].skippedReason+'\n';
+                getreson=getreson+element
+                
+            }
+            setshowstatus(true)
+            seterrormessage(getreson)
+          
+
+        }
+        if(getsuccessfullOrder.length>0){
+            setshowstatus(true)
+            seterrormessage(getsuccessfullOrder[0]?.response?.message)
             setmessagestatus(getsuccessfullOrder[0].status)
     
     
          }
-    }
-    else if(interfacePin==='cable'){
-        console.log(response.data)
-        const getreasonfororderskip=response.data.skippedOrder
-        const getsuccessfullOrder=response.data.succesfulOrder
-        if(getreasonfororderskip.length>0){
-            let getreson=''
-            for (let i = 0; i < getreasonfororderskip.length; i++) {
-                const element = getreasonfororderskip[i].skippedReason+'\n';
-                getreson=getreson+element
-                
-            }
+         if (getfailOrder.length>0){
             setshowstatus(true)
-            seterrormessage(getreson)
-          
-
-        }
-        if(getsuccessfullOrder.length>0){
-            setshowstatus(true)
-            seterrormessage(getsuccessfullOrder[0].message)
-            setmessagestatus(getsuccessfullOrder[0].status)
-    
-    
+            seterrormessage(getfailOrder[0]?.response?.message)
+            setmessagestatus(getfailOrder[0]?.status)
          }
         
     }
         else if(interfacePin==='electricity'){
-            console.log('ok')
-            console.log(response.data)
-            const getreasonfororderskip=response.data.skippedOrder
-            const getsuccessfullOrder=response.data.succesfulOrder
+            const getreasonfororderskip=response.data?.skippedOrder
+            const getsuccessfullOrder=response.data?.succesfulOrder
+            const getfailOrder=response.data?.failedOrder
             if(getreasonfororderskip.length>0){
                 let getreson=''
                 for (let i = 0; i < getreasonfororderskip.length; i++) {
@@ -240,10 +262,15 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
             }
             if(getsuccessfullOrder.length>0){
                 setshowstatus(true)
-                seterrormessage(getsuccessfullOrder[0].message)
+                seterrormessage(getsuccessfullOrder[0]?.response?.message)
                 setmessagestatus(getsuccessfullOrder[0].status)
         
         
+             }
+             if (getfailOrder.length>0){
+                setshowstatus(true)
+                seterrormessage(getfailOrder[0]?.response?.message)
+                setmessagestatus(getfailOrder[0]?.status)
              }
       
 
@@ -278,12 +305,38 @@ const PinModal=({alldata,senddata,close,beneficairyarray,interfacePin,debitplatf
                 <Preloadertwo/>
             </View>}
             {showstatus &&<View className="absolute w-full h-full items-center z-50">
-                <Statuspage
+                {/* <Statuspage
                 message={errormessage}
                 messagestatus={messagestatus}
                 close={(value)=>handlefuncclose(value)}
+                closeall={(value)=>handleallclose(value)}
                
-                />
+                /> */}
+                <View className="h-full w-full flex bg-white rounded-xl items-center">
+            {messagestatus==='successfull'?<View className="flex-1 justify-center px-5">
+            <View className="items-center"><AntDesign name="check" size={100} color="#509DFF" /></View>
+            <Text className={`${fieldtexttwo} font-bold text-center`}>Success</Text>
+            <Text className={`${fieldtextone} text-center`}>{errormessage}</Text>
+            
+            <View className="mt-3 items-center">
+                            <TouchableOpacity onPress={handleallclose} className="bg-blue-500 h-12 flex flex-row w-full items-center justify-center rounded-xl"><Text className={`${fieldtextone} text-white`}>Ok</Text></TouchableOpacity>
+                            <TouchableOpacity className="bg-blue-700 h-12 flex flex-row w-full items-center justify-center rounded-xl mt-3"><Text className={`${fieldtextone} text-white`}>Share</Text><MaterialIcons name="share" size={24} color="white" /></TouchableOpacity>
+            </View>
+
+            
+
+            </View>:
+            <View className="flex-1 justify-center px-5 ">
+             <View className="items-center"><FontAwesome5 name="times-circle" color="red" size={100} /></View>
+             <Text className={`${fieldtexttwo} font-bold text-center`}>Failed</Text>
+            <Text className={`${fieldtextone} text-center`}>{errormessage}</Text>
+             <View className="mt-3 items-center">
+                            <TouchableOpacity onPress={handleclose} className="bg-blue-500 h-12 flex flex-row w-full items-center justify-center rounded-xl"><Text className={`${fieldtextone} text-white`}>Try Again</Text></TouchableOpacity>
+                           
+            </View>
+
+            </View>}
+                </View>
                 </View>}
             <View className=" mt-5 items-center">
             <View className="pb-5 border-b border-slate-200 items-end w-full px-2">

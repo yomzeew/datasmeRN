@@ -12,8 +12,8 @@ const Footer=()=>{
     const handletranshistory = () => {
         navigation.navigate('transhistorytwo')
     }
-    const handlesetting=()=>{
-        navigation.navigate('settings')
+    const handlelogout=()=>{
+        navigation.navigate('login')
 
     }
     const handlefund = () => {
@@ -25,9 +25,9 @@ const Footer=()=>{
             <View className="items-center">
             <TouchableOpacity  className="items-center" onPress={handledashboard}>
             <View>
-            <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+            <View className="bg-regal-blue  rounded-full h-12 w-12" />
             <View className="absolute h-12 w-12 items-center flex justify-center">
-                <FontAwesome name="home" size={20} color="#1f5fc4" /></View>
+                <FontAwesome name="home" size={20} color="white" /></View>
             </View>
            
             <Text className="text-xs text-regal-blue">Home</Text></TouchableOpacity>
@@ -35,28 +35,28 @@ const Footer=()=>{
             <View className="items-center">
             <TouchableOpacity  className="items-center" onPress={handletranshistory}>
             <View>
-            <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
+            <View className="bg-regal-blue  rounded-full h-12 w-12" />
             <View className="absolute h-12 w-12 items-center flex justify-center">
-                <AntDesign  name="filetext1" size={20} color={primary} /></View>
+                <AntDesign  name="filetext1" size={20} color="white" /></View>
             </View>
             <Text className="text-xs text-regal-blue">Transaction</Text></TouchableOpacity>
             </View>
             <View className="items-center">
             <TouchableOpacity  className="items-center" onPress={handlefund} >
             <View>
-            <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
-            <View className="absolute h-12 w-12 items-center flex justify-center"><Entypo name="wallet" size={20} color={primary} /></View>
+            <View className="bg-regal-blue rounded-full h-12 w-12" />
+            <View className="absolute h-12 w-12 items-center flex justify-center"><Entypo name="wallet" size={20} color="white" /></View>
                 </View>
                     <Text className="text-xs text-regal-blue">Fund Wallet</Text>
             </TouchableOpacity>
             </View>
             <View className="items-center">
-            <TouchableOpacity  className="items-center" onPress={handlesetting}>
+            <TouchableOpacity  className="items-center" onPress={handlelogout}>
             <View>
-            <View className="opacity-40 bg-blue-300 rounded-full h-12 w-12" />
-            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="meho" size={20} color={primary} /></View>
+            <View className="bg-red-500  rounded-full h-12 w-12" />
+            <View className="absolute h-12 w-12 items-center flex justify-center"><AntDesign name="logout" size={20} color="white" /></View>
             </View>
-            <Text className="text-xs text-regal-blue">Me</Text>
+            <Text className="text-xs text-regal-blue">Logout</Text>
             </TouchableOpacity>
             </View>
 

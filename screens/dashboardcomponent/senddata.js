@@ -17,6 +17,7 @@ import PinModal from "../modals/PinModal";
 import Preloadertwo from "../preloadertwo";
 import Header from "./header";
 import ConfirmationPage from "../modals/ConfirmationPage";
+import { mydata } from "../services/sampledata";
 
 
 
@@ -45,6 +46,9 @@ const SendData = () => {
     const [showpin,setshowpin]=useState(false)
     const [Loader, setLoader]=useState(true)
    const [testnumber,settestnumber]=useState('')
+   const [selectnetwork,setselectnetwork]=useState([])
+   const [categoryArray,setcategoryArray]=useState([])
+   const [catarrayselect,setcatarrayselect]=useState([])
     const functiongetExp = async () => {
         const getTime = await AsyncStorage.getItem('mytimestamp')
         const checktoken = isLessThanOneHour(parseInt(getTime, 10))
@@ -59,9 +63,20 @@ const SendData = () => {
             const mytokenreal = JSON.parse(mytoken)
             settoken(mytokenreal)
             const mydataall = await getProductData('data', mytokenreal)
-           
-            setdata(mydataall)
+           const datacategory=mydataall.category
+           console.log(datacategory)
+           setcategoryArray(datacategory)
+           // select network only
+           let networkarray=[]
+           for (let i = 0; i < datacategory.length; i++) {
+            const network=datacategory[i].networkText
+            console.log('ok')
+            networkarray.push(network)
+           }
+           console.log(networkarray)
+           setselectnetwork(networkarray)
 
+            setdata(mydataall)
             }catch(error){
 
             }
@@ -106,29 +121,50 @@ const SendData = () => {
     }, []);
     const translateY = useSharedValue(300);
     const handleshownetwork = async () => {
-        setdatachoose(JsonData)
-        setkeytosend('categoryText')
+        console.log(selectnetwork)
+        setdatachoose(selectnetwork)
+        setkeytosend('network')
         translateY.value = withSpring(0);
         setshowmodal(true)
 
     }
     const handleshowplan = async () => {
-        setdatachoose(JsonData[getindex].plans)
-        console.log(JsonData[getindex].plans)
-        setkeytosend('')
+        //get plans
+        const getplan =categoryArray.filter((item) => 
+            item.networkText.toLowerCase()===NetworkName.toLowerCase()
+    );
+    //get plan from categorys
+      const categoryplan=getplan[0].categorys
+      setcatarrayselect(categoryplan)
+      let arraycategoryplan=[]
+      for (let i = 0; i < categoryplan.length; i++) {
+        plancatecory = categoryplan[i].text;
+        arraycategoryplan.push(plancatecory)
+        
+      }
+
+        setdatachoose(arraycategoryplan)
+        setkeytosend('category')
         translateY.value = withSpring(0);
         setshowmodal(true)
 
     }
     const  handlesubplan=async()=>{
         const plans=getdata.plans
+        console.log(plans)
+        console.log(Planselect)
         if(!Planselect){
             return
         }
-        const getsubplanarray=plans.filter((item)=>(
-            item.categoryText===Planselect
+        // get categoryid
+        const arrayselectcategory=catarrayselect.filter((item)=>
+            item.text.toLowerCase()===Planselect.toLowerCase()
+        )
+        const catid=arrayselectcategory[0].categoryId
+        const getsubplanarray = plans.filter((item) => 
+            item.categoryId===catid
+    );
 
-        ));
         setdatachoose(getsubplanarray)
         console.log(getsubplanarray)
         setshowmodal(true)
@@ -145,15 +181,16 @@ const SendData = () => {
     }));
     const handlegetObjectindex = (value) => {
        
-        if(getkeytosend===''){
+        if(getkeytosend==='category'){
+            console.log(datachoose[value])
             setPlanselect(datachoose[value])
            
             
 
         }
-        else if(getkeytosend==='categoryText'){
+        else if(getkeytosend==='network'){
             setindex(value)
-            setNetworkName(datachoose[value].network)
+            setNetworkName(datachoose[value])
             setPlanselect('')
             setSubplanName('')
             setisDisable(false)
@@ -214,10 +251,11 @@ const SendData = () => {
         }
         if(arrayphone[i].length===11){
             //get network id
-            const getnetworkarray=JsonData.filter((item)=>(
-                item.network===NetworkName
+            const datacategory=getdata.network
+            const getnetworkarray=datacategory.filter((item)=>(
+                item.networkText===NetworkName
             ))
-            const networkid=getnetworkarray[0].id
+            const networkid=getnetworkarray[0].networkId
             const getarray={beneficiary:arrayphone[i],networkid:networkid,smeplan:Planselect,subplan:subplanName,serviceId:ServiceID}
             const datasend={beneficairy:arrayphone[i],network:networkid,serviceID:ServiceID}
             arraybeneciaryy.push(getarray)
@@ -313,6 +351,18 @@ const handlecloseConf=(value)=>{
 
 
 }
+const handlecloseall=(value)=>{
+    setshowConf(value)
+    console.log('ok')
+    setshowpin(value)
+    setNetworkName('')
+    setPlanselect('')
+    setBeneficiaryArray([])
+    setSubplanName('')
+    setSendArray([])
+    settestnumber('')
+}
+
     return (
         <View className="h-full">
              {Loader &&
@@ -326,7 +376,7 @@ const handlecloseConf=(value)=>{
              <SafeAreaView style={styles.andriod} className="h-full w-screen bg-slate-50">
              <StatusBar style="dark" />
             
-            {showmodal && <View className="bottom-0 absolute z-50">
+            {showmodal && <View className="bottom-0  absolute z-50">
                 <Animated.View style={[animatedStyles]}>
                     <ModalList
                         data={datachoose}
@@ -369,6 +419,7 @@ const handlecloseConf=(value)=>{
             close={(value) => handleclosepin(value)}
             beneficairyarray={BeneficiaryArray}
             interfacePin={'data'}
+            
 
             />
 
@@ -387,6 +438,7 @@ const handlecloseConf=(value)=>{
             close={(value) => handlecloseConf(value)}
             beneficairyarray={BeneficiaryArray}
             interfacePin={'data'}
+            closeall={(value)=>handlecloseall(value)}
 
             />
 
@@ -447,7 +499,10 @@ const handlecloseConf=(value)=>{
                     <View className="mt-3">
                         <KeyboardAvoidingView
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                            <View className="flex flex-row">
                             <Text className={`font-bold ${fieldtextone} text-slate-500`}>Enter Phone Number</Text>
+                            <Text className="text-red-500 text-sm">(You can enter multiple Phone Numbers)</Text>
+                            </View>
                             <TextInput
                                 className="bg-slate-100 border h-12 rounded-xl border-slate-400 px-3 text-lg"
                                 onChangeText={(text) => { handlephone(text) }}

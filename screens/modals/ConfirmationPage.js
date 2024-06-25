@@ -4,7 +4,7 @@ import { fieldtextone, fieldtextthree, fieldtexttwo } from "../services/textsett
 import { useState,useEffect } from "react"
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import PinModal from "./PinModal";
-const ConfirmationPage=({alldata,senddata,close,beneficairyarray,interfacePin,senddataforexam})=>{
+const ConfirmationPage=({alldata,senddata,close,beneficairyarray,interfacePin,senddataforexam,closeall})=>{
     const [totalamount,settotalamount]=useState(null)
     const [debitplatform,setdebitplatform]=useState('')
     const [showpin,setshowpin]=useState(false)
@@ -102,6 +102,10 @@ const handlewallet=()=>{
     setdebitplatform('bonus')
  
   }
+  const handlecloseall=(value)=>{
+    closeall(value)
+
+  }
     return (
         <View className=" bg-white  rounded-2xl h-full">
              {showpin&&
@@ -113,7 +117,9 @@ const handlewallet=()=>{
             close={(value) => handleclosepin(value)}
             beneficairyarray={beneficairyarray}
             interfacePin={interfacePin}
-            debitplatform={debitplatform}
+            debitplatform={debitplatform||'wallet'}
+            closeall={(value)=>handlecloseall(value)}
+
 
             />
 

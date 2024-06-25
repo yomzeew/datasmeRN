@@ -1,10 +1,14 @@
 import { AntDesign,Feather,FontAwesome5,MaterialIcons} from '@expo/vector-icons';
 import { Text, View,TouchableOpacity } from 'react-native';
 import { fieldtextone, fieldtexttwo } from '../services/textsetting';
-const Statuspage=({message,close,messagestatus,datamessage})=>{
+const Statuspage=({message,close,messagestatus,datamessage,closeall})=>{
     const handleclose=()=>{
         console.log('ok')
         close(false)
+        
+    }
+    const handleallclose=()=>{
+        closeall(false)
     }
     return(
         <View className="h-full w-full flex bg-white rounded-xl items-center">
@@ -14,7 +18,7 @@ const Statuspage=({message,close,messagestatus,datamessage})=>{
             <Text className={`${fieldtextone} text-center`}>{message}</Text>
             
             <View className="mt-3 items-center">
-                            <TouchableOpacity onPress={handleclose} className="bg-blue-500 h-12 flex flex-row w-full items-center justify-center rounded-xl"><Text className={`${fieldtextone} text-white`}>Ok</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={handleallclose} className="bg-blue-500 h-12 flex flex-row w-full items-center justify-center rounded-xl"><Text className={`${fieldtextone} text-white`}>Ok</Text></TouchableOpacity>
                             <TouchableOpacity className="bg-blue-700 h-12 flex flex-row w-full items-center justify-center rounded-xl mt-3"><Text className={`${fieldtextone} text-white`}>Share</Text><MaterialIcons name="share" size={24} color="white" /></TouchableOpacity>
             </View>
 

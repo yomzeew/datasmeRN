@@ -13,3 +13,4 @@ export const updatepass=`${baseUrl}/category/change/pass/password`
 export const updatepin=`${baseUrl}/category/change/pass/pin`
 export const chatbot=`${baseUrl}/communication/chatbot`
 export const Apikeygermini='AIzaSyDkAdHyEkstr8HSZAlmnOCHfe1qFumQqZs'
+export const pushurl=`${baseUrl}/notification/registration`

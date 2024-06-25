@@ -22,29 +22,31 @@ const ChatBot = () => {
 
             return
         }
-        const genAI = new GoogleGenerativeAI(Apikeygermini);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // const genAI = new GoogleGenerativeAI(Apikeygermini);
+        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         setsendMessage(message);
         setmessageArray(prevArray => [...prevArray, message, '...']);
 
         try {
-            //   const mytoken = await AsyncStorage.getItem('mytoken');
-            //   const mytokenreal = JSON.parse(mytoken);
-            //   console.log(mytokenreal);
-            //   console.log(message);
+       const mytoken = await AsyncStorage.getItem('mytoken');
+        const mytokenreal = JSON.parse(mytoken);
+         console.log(mytokenreal);
+        console.log(message);
 
-            //   const datato = { message: message };
-            //   const response = await axios.post(chatbot, datato, {
-            //     headers: {
-            //       Authorization: `Bearer ${mytokenreal}`,
-            //     }
-            //   });
-            const prompt = message
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-            console.log(text);
-            setreceivedMsg(text);
+             const datato = { message: message };
+              const response = await axios.post(chatbot, datato, {
+           headers: {
+               Authorization: `Bearer ${mytokenreal}`,
+               }
+              });
+              console.log(response.data)
+              const text=response.data.response
+            // const prompt = message
+            // const result = await model.generateContent(prompt);
+            // const response = await result.response;
+            // const text = response.text();
+            // console.log(text);
+               setreceivedMsg(text);
             setmessageArray(prevArray => [...prevArray.slice(0, -1), text]); // Replace '...' with the received message
         } catch (error) {
             console.error(error);

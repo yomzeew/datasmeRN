@@ -269,6 +269,11 @@ useEffect(()=>{
   
 
 },[decodernumber])
+const handlecloseall=(value)=>{
+    setshowConf(value)
+    console.log('ok')
+    setshowpin(value)
+}
     
     return (
         <View className="h-full bg-slate-50">   
@@ -355,6 +360,7 @@ useEffect(()=>{
             senddata={datasend}
             close={(value) => handlecloseConf(value)}
             interfacePin={'cable'}
+            closeall={(value)=>handlecloseall(value)}
             />
 
             </Animated.View>

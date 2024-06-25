@@ -27,8 +27,8 @@ const ModalList=({data,keytosend,close,getobjectselectindex,planselect})=>{
         >
             {mydata.length>0?mydata.map((item,index)=>{
                 let itemshow
-                if(keytosend==='categoryText'){
-                    itemshow=item[keytosend]
+                if(keytosend==='network'){
+                    itemshow=item
                 }
                 else if(keytosend==='counter'){
                     itemshow=planselect+'-'+item[keytosend]+'-'+'N'+item['amount']

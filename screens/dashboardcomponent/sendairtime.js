@@ -280,6 +280,11 @@ const handlecloseConf=(value)=>{
 
 
 }
+const handlecloseall=(value)=>{
+    setshowConf(value)
+    console.log('ok')
+    setshowpin(value)
+}
     return (
         <View className="h-full">
             {Loader &&
@@ -339,6 +344,7 @@ const handlecloseConf=(value)=>{
             close={(value) => handlecloseConf(value)}
             beneficairyarray={BeneficiaryArray}
             interfacePin={'airtime'}
+            closeall={(value)=>handlecloseall(value)}
 
             />
 

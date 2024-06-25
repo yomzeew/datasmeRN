@@ -21,6 +21,7 @@ const LoginPage=({navigation})=>{
     const [showpass,setshowpass]=useState(true)
     const [errormessage,seterrormessage]=useState('')
     const [preloader,setpreloader]=useState(true)
+    const [loader,setloader]=useState(false)
     const [isBiometricSupported, setIsBiometricSupported] =useState(false);
     const [Objectdata,setObjectdata]=useState('')
     const [Enroll,setEnroll]=useState(false)
@@ -86,6 +87,7 @@ const LoginPage=({navigation})=>{
    
               if (authResult.success) {
                   try {
+                       setloader(true);
                        const data = { email: emailSql, password: passwordSql };
                        const response = await axios.post(loginurl, data);
                        
@@ -109,7 +111,7 @@ const LoginPage=({navigation})=>{
                        const errMsg = errData.errors[0].msg;
                        seterrormessage(errMsg);
                    } finally {
-                       setpreloader(true);
+                       setloader(false);
                    }
                } else {
                    navigation.navigate('login');
@@ -209,6 +211,11 @@ const LoginPage=({navigation})=>{
                             <TouchableOpacity onPress={cancelHandle}><Text className="text-white font-bold py-3 text-center">OK</Text></TouchableOpacity>
                         </View>
                         </View>}
+             {loader &&
+                <View className="bg-slate-400 h-full w-full absolute z-50 opacity-70 flex justify-center items-center">
+                    <Preloadertwo />
+                </View>
+            }
         <SafeAreaView style={styles.andriod} className="flex-1 flex w-screen bg-regal-blue ">
             <StatusBar style="dark" />
            

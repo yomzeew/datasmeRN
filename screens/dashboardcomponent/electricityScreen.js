@@ -201,6 +201,11 @@ const handlecloseConf=(value)=>{
 
 
 }
+const handlecloseall=(value)=>{
+    setshowConf(value)
+    console.log('ok')
+    setshowpin(value)
+}
     return(
         <View className="h-full">
               {Loader &&
@@ -258,6 +263,7 @@ const handlecloseConf=(value)=>{
             senddata={datasend}
             close={(value) => handlecloseConf(value)}
             interfacePin={'electricity'}
+            closeall={(value)=>handlecloseall(value)}
             />
 
             </Animated.View>
